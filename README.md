@@ -10,6 +10,8 @@ So this project is a try to integrate Angular 2 and GWT in a way that is pleasan
 
 A demo is available [here](http://lteconsulting.fr/angular2-gwt/).
 
+**Note**: That's really the beginning, more is going to come. But at this stage, this project proves the feasibility of such things.
+
 ## Instructions
 
 Checkout this repository, then :
