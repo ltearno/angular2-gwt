@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.lteconsulting</groupId>
 	<artifactId>angular2-gwt</artifactId>
@@ -10,7 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<runTarget>http://localhost:8888/</runTarget>
-		<gwt.version>2.8.0-beta1</gwt.version>
+		<gwt.version>2.8.0-SNAPSHOT</gwt.version>
 		<gwt.plugin.version>2.8.0-beta1</gwt.plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -76,6 +75,8 @@
 					<module>fr.lteconsulting.angular2gwt.Angular2Gwt</module>
 					<persistentunitcache>true</persistentunitcache>
 					<persistentunitcachedir>${basedir}/target/gwt-unitCache</persistentunitcachedir>
+					<!-- <disableCastChecking>true</disableCastChecking> -->
+					<generateJsInteropExports>true</generateJsInteropExports>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -119,7 +120,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -153,4 +154,30 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>snapshots-repo</id>
+			<url>https://oss.sonatype.org/content/repositories/google-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>snapshots-repo</id>
+			<!--<url>https://oss.sonatype.org/content/repositories/google-snapshots</url> -->
+			<url>https://oss.sonatype.org/content/repositories/public/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
