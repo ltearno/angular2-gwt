@@ -1,12 +1,3 @@
-.classpath
-.gwt/
-.settings/
 .project
-target/
-gwt-unitCache/
-war/
-/target/
-.idea/
-*.iml
-/target/
-.factorypath
+.settings/
+angular2-gwt-processor/.classpath

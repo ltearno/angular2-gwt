@@ -6,8 +6,6 @@
 
 	<inherits name="com.google.gwt.user.theme.clean.Clean" />
 
-	<inherits name="fr.lteconsulting.hexa.HexaGWT28" />
-
 	<source path="client" />
 
 	<entry-point class="fr.lteconsulting.angular2gwt.client.Application" />

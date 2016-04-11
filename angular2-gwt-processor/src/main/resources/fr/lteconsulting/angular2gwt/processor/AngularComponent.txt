@@ -1,0 +1,16 @@
+package PACKAGE;
+
+public class CLASS_NAME
+{
+	public static native Object get()
+	/*-{
+		var component = $wnd.COMPONENT_CLASS_FQN;
+
+		component.annotations = [ new $wnd.ng.core.Component({
+			selector: "SELECTOR",
+			template: "TEMPLATE"
+		}) ];
+
+		return component;
+	}-*/;
+}
