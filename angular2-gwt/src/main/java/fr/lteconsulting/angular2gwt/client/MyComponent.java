@@ -22,12 +22,13 @@ import jsinterop.annotations.JsType;
 @AngularComponent(
 		selector = "my-app",
 		template = "<div>"
-				+ "<h1>Simple Angular 2 Application</h1>"
+				+ "<h1>Angular 2 GWT proof of concept Application</h1>"
+				+ "<p>There are {{heroes.length}} heroes<b *ngIf='heroes.length> 6'>, that's a lot !</b></p>"
 				+ "Name of hero to add : {{name}}<br/>"
 				+ "<input [(ngModel)]='name'><br/>"
 				+ "<button (click)='onClick($event)'>Add</button>"
 				+ "<ul>"
-					+ "<li *ngFor='#hero of heroes'>{{ hero }}</li>"
+					+ "<li *ngFor='#hero of heroes'>{{ hero.name }}</li>"
 				+ "</ul>"
 				+ "</div>" )
 // @formatter:on
@@ -41,7 +42,7 @@ public class MyComponent
 	private String name;
 
 	@JsProperty
-	private JsArray<String> heroes;
+	private JsArray<Hero> heroes;
 
 	/**
 	 * This constructor dumbly initialize the fields to hard coded values.
@@ -52,7 +53,7 @@ public class MyComponent
 	public MyComponent()
 	{
 		name = "Arnaud";
-		heroes = JsArray.of( new String[] { "Windstorm", "Bombasto", "Magneta", "Tornado" } );
+		heroes = JsArray.of( new Hero( "Windstorm" ), new Hero( "Bombasto" ), new Hero( "Magneta" ), new Hero( "Tornado" ) );
 	}
 
 	/**
@@ -64,6 +65,6 @@ public class MyComponent
 	@JsMethod
 	private void onClick()
 	{
-		heroes.push( name );
+		heroes.push( new Hero( name ) );
 	}
 }

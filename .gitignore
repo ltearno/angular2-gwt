@@ -1,3 +1,4 @@
 .project
 .settings/
 angular2-gwt-processor/.classpath
+target/
