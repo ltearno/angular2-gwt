@@ -25,6 +25,8 @@ import javax.tools.JavaFileObject;
 public class AngularComponentProcessor extends AbstractProcessor {
 	public final static String AnnotationFqn = "fr.lteconsulting.angular2gwt.AngularComponent";
 
+	private final static String HELPER_CLASS_SUFFIX = "_AngularComponent";
+
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 		for (TypeElement element : ElementFilter.typesIn(
@@ -41,7 +43,7 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		String template = readResource("fr/lteconsulting/angular2gwt/processor/AngularComponent.txt");
 
 		String packageName = ((PackageElement) element.getEnclosingElement()).getQualifiedName().toString();
-		String angularComponentName = element.getSimpleName() + "_AngularComponent";
+		String angularComponentName = element.getSimpleName() + HELPER_CLASS_SUFFIX;
 
 		template = template.replaceAll("PACKAGE", packageName);
 		template = template.replaceAll("CLASS_NAME", angularComponentName);
@@ -49,8 +51,25 @@ public class AngularComponentProcessor extends AbstractProcessor {
 
 		AngularComponent annotation = element.getAnnotation(AngularComponent.class);
 
-		template = template.replace("SELECTOR", annotation.selector());
-		template = template.replace("TEMPLATE", annotation.template());
+		String aSelector = annotation.selector();
+		String aTemplate = annotation.template().isEmpty() ? "" : "template: \"" + annotation.template() + "\",";
+		String aTemplateUrl = annotation.templateUrl().isEmpty() ? ""
+				: "templateUrl: \"" + annotation.templateUrl() + "\",";
+		String aDirectives = "";
+		if (annotation.directives().length > 0) {
+			aDirectives = "directives: [";
+			for (int i = 0; i < annotation.directives().length; i++) {
+				if (i > 0)
+					aDirectives += ", ";
+				aDirectives += "@" + annotation.directives()[i] + HELPER_CLASS_SUFFIX + "::get()()";
+			}
+			aDirectives += "]";
+		}
+
+		template = template.replace("SELECTOR", aSelector);
+		template = template.replace("TEMPLATE_URL", aTemplateUrl);
+		template = template.replace("TEMPLATE", aTemplate);
+		template = template.replace("DIRECTIVES", aDirectives);
 
 		String targetClassFqn = packageName + "." + angularComponentName;
 

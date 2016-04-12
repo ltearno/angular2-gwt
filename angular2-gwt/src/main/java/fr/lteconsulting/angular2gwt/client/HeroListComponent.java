@@ -20,23 +20,23 @@ import jsinterop.annotations.JsType;
  */
 // @formatter:off
 @AngularComponent(
-		selector = "my-app",
+		selector = "hero-list",
 		template = "<div>"
 				+ "<h1>Angular 2 GWT proof of concept Application</h1>"
 				+ "<p>There are {{heroes.length}} heroes<b *ngIf='heroes.length> 6'>, that's a lot !</b></p>"
 				+ "Name of hero to add : {{name}}<br/>"
-				+ "<input [(ngModel)]='name'><br/>"
-				+ "<button (click)='onClick($event)'>Add</button>"
+				+ "<input #newHero [(ngModel)]='name' (keyup.enter)='addHero(newHero.value)' (blur)='addHero(newHero.value); newHero.value=\\\"\\\";'><br/>"
+				+ "<button (click)='addHero(newHero.value)'>Add</button>"
 				+ "<ul>"
 					+ "<li *ngFor='#hero of heroes'>{{ hero.name }}</li>"
 				+ "</ul>"
 				+ "</div>" )
 // @formatter:on
 @JsType
-public class MyComponent
+public class HeroListComponent
 {
 	/**
-	 * Those two fields will be bound by Angular. They can also be accessed as normal fields in the controller's code, as in the onClick method
+	 * Those two fields will be bound by Angular. They can also be accessed as normal fields in the controller's code, as in the addHero method
 	 */
 	@JsProperty
 	private String name;
@@ -50,7 +50,7 @@ public class MyComponent
 	 * <p>
 	 * Much more could be done by inspecting the angular inputs and scope
 	 */
-	public MyComponent()
+	public HeroListComponent()
 	{
 		name = "Arnaud";
 		heroes = JsArray.of( new Hero( "Windstorm" ), new Hero( "Bombasto" ), new Hero( "Magneta" ), new Hero( "Tornado" ) );
@@ -63,7 +63,7 @@ public class MyComponent
 	 * entry is displayed and the view is automatically refreshed.
 	 */
 	@JsMethod
-	private void onClick()
+	private void addHero( String heroName )
 	{
 		heroes.push( new Hero( name ) );
 	}

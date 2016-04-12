@@ -3,10 +3,13 @@ package fr.lteconsulting.angular2gwt;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@Retention( RetentionPolicy.SOURCE )
-public @interface AngularComponent
-{
+@Retention(RetentionPolicy.SOURCE)
+public @interface AngularComponent {
 	String selector();
 
-	String template();
+	String template() default "";
+
+	String templateUrl() default "";
+
+	String[] directives() default {};
 }

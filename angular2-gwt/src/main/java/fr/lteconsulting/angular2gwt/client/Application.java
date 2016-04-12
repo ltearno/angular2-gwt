@@ -15,7 +15,7 @@ import fr.lteconsulting.angular2gwt.client.angular2.Browser;
  * Next work is to be able to nest components and declare inputs and outputs directly in the Java code.
  * 
  * @author Arnaud Tournier
- * (c) LTE Consulting 2016
+ *         (c) LTE Consulting 2016
  */
 public class Application implements EntryPoint
 {
@@ -25,8 +25,8 @@ public class Application implements EntryPoint
 		/**
 		 * Here we just bootstrap the Angular 2 framework with our application controller.
 		 * 
-		 * The application controller is implemented in the {@link MyComponent} class
+		 * The application controller is implemented in the {@link HeroListComponent} class
 		 */
-		Browser.bootstrap( MyComponent_AngularComponent.get() );
+		Browser.bootstrap( ApplicationComponent_AngularComponent.get() );
 	}
 }

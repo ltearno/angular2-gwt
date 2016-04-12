@@ -11,4 +11,6 @@
 	<entry-point class="fr.lteconsulting.angular2gwt.client.Application" />
 
 	<collapse-all-properties />
+
+	<!-- <add-linker name="sso" /> -->
 </module>

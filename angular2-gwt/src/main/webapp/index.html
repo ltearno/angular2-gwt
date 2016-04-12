@@ -6,13 +6,17 @@
 
 <title>Angular 2 with GWT !</title>
 
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
 <!-- Angular 2 runtime, sorry that's big for a hello world -->
 <!-- but that is how Javascript ecosystem works... -->
 <script src="node_modules/es6-shim/es6-shim.min.js"></script>
 <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
 <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
 <script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
-<script src="node_modules/angular2/bundles/angular2-all.umd.js"></script>
+
+<!-- This is a very slightly modified version of Angular, to work with the SuperDevMode -->
+<script src="angular2-all.umd.js"></script>
 
 <script type="text/javascript" src="angular2gwt/angular2gwt.nocache.js"></script>
 
