@@ -53,7 +53,7 @@ public class HeroListComponent
 	public HeroListComponent()
 	{
 		name = "Arnaud";
-		heroes = JsArray.of( new Hero( "Windstorm" ), new Hero( "Bombasto" ), new Hero( "Magneta" ), new Hero( "Tornado" ) );
+		heroes = JsArray.of( new Hero( "Windstorm", "Do nothing", null ), new Hero( "Bombasto", "Do nothing", null ), new Hero( "Magneta", "Do nothing", null ), new Hero( "Tornado", "Do nothing", null ) );
 	}
 
 	/**
@@ -65,6 +65,6 @@ public class HeroListComponent
 	@JsMethod
 	private void addHero( String heroName )
 	{
-		heroes.push( new Hero( name ) );
+		heroes.push( new Hero( name, "Do nothing", null ) );
 	}
 }

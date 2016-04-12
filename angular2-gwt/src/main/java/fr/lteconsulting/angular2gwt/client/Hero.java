@@ -12,10 +12,18 @@ public class Hero
 	@JsProperty
 	private String name;
 
-	public Hero( String name )
+	@JsProperty
+	private String power;
+
+	@JsProperty
+	private String alterEgo;
+
+	public Hero( String name, String power, String alterEgo )
 	{
 		this.id = Counter.nextId++;
 		this.name = name;
+		this.power = power;
+		this.alterEgo = alterEgo;
 	}
 }
 

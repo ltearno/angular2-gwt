@@ -1,7 +1,13 @@
 package fr.lteconsulting.angular2gwt.client;
 
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
+
 class JsTools
 {
+	@JsMethod( namespace = JsPackage.GLOBAL, name = "setTimeout" )
+	public static native void setTimeout( JsCallback callback, int timeout );
+
 	static void setImpl( Object o, Object name, Object value )
 	{
 		if( value instanceof Integer )
