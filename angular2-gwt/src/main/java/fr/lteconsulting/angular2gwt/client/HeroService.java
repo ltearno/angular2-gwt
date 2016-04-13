@@ -11,4 +11,9 @@ public class HeroService
 	{
 		return heroes;
 	}
+
+	public void addHero( Hero hero )
+	{
+		heroes.push( hero );
+	}
 }

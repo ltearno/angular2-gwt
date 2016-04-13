@@ -1,10 +1,8 @@
 package fr.lteconsulting.angular2gwt.client.angular2;
 
 import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsType;
 
-@JsType( isNative = true, namespace = "ng.platform.browser" )
-public class Browser
+public class Angular
 {
 	/**
 	 * Calls to the Angular 2 bootstrap function

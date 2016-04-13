@@ -9,8 +9,8 @@ import jsinterop.annotations.JsType;
 @Component(
 		selector = "hero-list",
 		templateUrl = "hero-list.component.html",
-		directives = {HeroFormComponent.class},
-		providers = {HeroService.class})
+		styleUrls = {"hero-list.component.css"},
+		directives = {HeroFormComponent.class})
 //@formatter:on
 @JsType
 public class HeroListComponent
@@ -23,12 +23,6 @@ public class HeroListComponent
 
 	@JsProperty
 	private JsArray<Hero> heroes;
-
-	// public HeroListComponent()
-	// {
-	// heroes = JsArray.of( new Hero( "Windstorm", "Do nothing", null ), new Hero( "Bombasto", "Do nothing", null ), new Hero( "Magneta", "Do nothing", null ),
-	// new Hero( "Tornado", "Do nothing", null ) );
-	// }
 
 	public HeroListComponent( HeroService heroService )
 	{

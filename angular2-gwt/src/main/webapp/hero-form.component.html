@@ -1,6 +1,6 @@
 <div class="container">
 	<div [hidden]="submitted" *ngIf="model">
-		<h1>Hero Form</h1>
+		<h1>{{model.name}} edition form</h1>
 		<form *ngIf="active" (ngSubmit)="onSubmit()" #heroForm="ngForm">
 			<div class="form-group">
 				<label for="name">Name</label> <input type="text" class="form-control" required

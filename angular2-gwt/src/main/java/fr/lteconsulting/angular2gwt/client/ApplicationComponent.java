@@ -7,7 +7,8 @@ import jsinterop.annotations.JsType;
 @Component(
 		selector = "my-app",
 		template = "<hero-list></hero-list>",
-		directives = {HeroListComponent.class}
+		directives = {HeroListComponent.class},
+		providers = {HeroService.class}
 		)
 //@formatter:on
 @JsType

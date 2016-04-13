@@ -68,6 +68,20 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		String aTemplateUrl = annotation.templateUrl().isEmpty() ? ""
 				: "templateUrl: \"" + annotation.templateUrl() + "\",";
 
+		// styles
+		String aStyles = annotation.styles().isEmpty() ? "" : "styles: [" + annotation.styles() + "],";
+
+		StringBuilder aStyleUrls = new StringBuilder();
+		for (int i = 0; i < annotation.styleUrls().length; i++) {
+			if (i == 0)
+				aStyleUrls.append("styleUrls: [");
+			else
+				aStyleUrls.append(", ");
+			aStyleUrls.append("'" + annotation.styleUrls()[i] + "'");
+		}
+		if (annotation.styleUrls().length > 0)
+			aStyleUrls.append("],");
+
 		// directives
 		StringBuilder directives = new StringBuilder();
 		Optional<? extends AnnotationMirror> optAnnotationMirror = element.getAnnotationMirrors().stream().filter(m -> {
@@ -197,6 +211,8 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		template = template.replace("SELECTOR", aSelector);
 		template = template.replace("TEMPLATE_URL", aTemplateUrl);
 		template = template.replace("TEMPLATE", aTemplate);
+		template = template.replace("STYLES", aStyles);
+		template = template.replace("STYLE_URLS", aStyleUrls.toString());
 		template = template.replace("DIRECTIVES", directives.toString());
 		template = template.replace("PROVIDERS", providers.toString());
 		template = template.replace("INPUTS", inputs.toString());

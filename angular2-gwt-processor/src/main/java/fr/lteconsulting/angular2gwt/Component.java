@@ -14,6 +14,10 @@ public @interface Component {
 
 	String templateUrl() default "";
 
+	String styles() default "";
+
+	String[] styleUrls() default {};
+
 	Class<?>[] directives() default {};
 
 	Class<?>[] providers() default {};

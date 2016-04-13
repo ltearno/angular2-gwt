@@ -2,6 +2,8 @@ package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
@@ -14,6 +16,9 @@ import jsinterop.annotations.JsType;
 @JsType
 public class HeroFormComponent
 {
+	@JsIgnore
+	private HeroService heroService;
+
 	@JsProperty
 	private JsArray<String> powers = JsArray.of( "Really Smart", "Super Flexible", "Super Hot", "Weather Changer", "Do nothing" );
 
@@ -27,6 +32,12 @@ public class HeroFormComponent
 	@JsProperty
 	private boolean active = true;
 
+	@JsConstructor
+	private HeroFormComponent( HeroService heroService )
+	{
+		this.heroService = heroService;
+	}
+
 	@JsMethod
 	private void onSubmit()
 	{
@@ -36,7 +47,8 @@ public class HeroFormComponent
 	@JsMethod
 	private void newHero()
 	{
-		model = new Hero( "", "", null );
+		model = new Hero( "<no name>", "", null );
+		heroService.addHero( model );
 		active = false;
 		JsTools.setTimeout( () -> active = true, 0 );
 	}

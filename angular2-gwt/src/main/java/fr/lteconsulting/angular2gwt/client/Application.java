@@ -2,7 +2,7 @@ package fr.lteconsulting.angular2gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
 
-import fr.lteconsulting.angular2gwt.client.angular2.Browser;
+import fr.lteconsulting.angular2gwt.client.angular2.Angular;
 
 /**
  * This is a very first step trying to integrate Angular 2 with GWT 2.8
@@ -27,6 +27,6 @@ public class Application implements EntryPoint
 		 * 
 		 * The application controller is implemented in the {@link ApplicationComponent} class
 		 */
-		Browser.bootstrap( ApplicationComponent_AngularComponent.get() );
+		Angular.bootstrap( ApplicationComponent_AngularComponent.get() );
 	}
 }
