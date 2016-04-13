@@ -83,4 +83,4 @@ This is quiet straight-forward, and the class in the code contains comments so t
 
 ## Roadmap
 
-More documentation and more exploration of Angular. In particular the next step is to allow multiple controllers to work together...
+More documentation and more exploration of Angular. Would be good to cover all the features.
