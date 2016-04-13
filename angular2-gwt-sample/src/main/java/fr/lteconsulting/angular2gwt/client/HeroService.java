@@ -2,6 +2,15 @@ package fr.lteconsulting.angular2gwt.client;
 
 import jsinterop.annotations.JsType;
 
+/**
+ * Data service for the application
+ * 
+ * <p>
+ * It is injected into dependant components through the DI mechanism of Angular
+ * 
+ * @author Arnaud Tournier
+ *         (c) LTE Consulting 2016
+ */
 @JsType
 public class HeroService
 {

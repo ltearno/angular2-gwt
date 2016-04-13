@@ -8,6 +8,12 @@ import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
+/**
+ * Component to edit a {@link Hero}
+ * 
+ * @author Arnaud Tournier
+ *         (c) LTE Consulting 2016
+ */
 //@formatter:off
 @Component(
 		selector = "hero-form",

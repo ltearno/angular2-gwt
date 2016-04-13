@@ -3,6 +3,15 @@ package fr.lteconsulting.angular2gwt.client;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
+/**
+ * Main data object of this application.
+ * 
+ * <p>
+ * Represents a super hero with an id, a name, a power and an alter-ego
+ * 
+ * @author Arnaud Tournier
+ *         (c) LTE Consulting 2016
+ */
 @JsType
 public class Hero
 {
