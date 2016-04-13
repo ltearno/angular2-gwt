@@ -6,6 +6,10 @@ GWT also can do code generation, with the standard Java JSR-269...
 
 So this project is a try to integrate Angular 2 and GWT in a way that is pleasant for the developper.
 
+**This project will move a lot during the next few days, so don't expect complete consistency between the code and the README... You should prefer going to see the code !!!**
+
+Thanks !
+
 ## Demo
 
 A demo is available [here](http://lteconsulting.fr/angular2-gwt/).
