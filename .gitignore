@@ -1,4 +1,5 @@
-.project
-.settings/
-angular2-gwt-processor/.classpath
-target/
+angular2-gwt-processor/bin/
+angular2-gwt-processor/target/
+angular2-gwt-sample/src/main/webapp/node_modules/
+angular2-gwt-sample/target/
+angular2-gwt/target/

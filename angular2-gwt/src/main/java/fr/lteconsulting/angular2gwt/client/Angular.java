@@ -1,4 +1,4 @@
-package fr.lteconsulting.angular2gwt.client.angular2;
+package fr.lteconsulting.angular2gwt.client;
 
 import jsinterop.annotations.JsMethod;
 

@@ -2,8 +2,6 @@ package fr.lteconsulting.angular2gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
 
-import fr.lteconsulting.angular2gwt.client.angular2.Angular;
-
 /**
  * This is a very first step trying to integrate Angular 2 with GWT 2.8
  * 

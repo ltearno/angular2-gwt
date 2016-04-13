@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>angular2-gwt</module>
-        <module>angular2-gwt-processor</module>
+        <module>angular2-gwt-sample</module>
     </modules>
     <developers>
         <developer>
