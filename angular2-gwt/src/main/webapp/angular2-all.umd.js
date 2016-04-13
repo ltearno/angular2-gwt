@@ -4346,7 +4346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.mergeResolvedProviders = mergeResolvedProviders;
 	function _normalizeProviders(providers, res) {
 	    providers.forEach(function (b) {
-	        if (b instanceof lang_1.Type) {
+	        if ((typeof b) === (typeof lang_1.Type)) {
 	            res.push(provide(b, { useClass: b }));
 	        }
 	        else if (b instanceof Provider) {

@@ -3,6 +3,8 @@ package fr.lteconsulting.angular2gwt.processor;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -11,9 +13,13 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.AnnotationValue;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
+import javax.lang.model.util.SimpleAnnotationValueVisitor8;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
@@ -52,20 +58,87 @@ public class AngularComponentProcessor extends AbstractProcessor {
 
 		Component annotation = element.getAnnotation(Component.class);
 
+		// selector
 		String aSelector = annotation.selector();
+
+		// template
 		String aTemplate = annotation.template().isEmpty() ? "" : "template: \"" + annotation.template() + "\",";
+
+		// templateUrl
 		String aTemplateUrl = annotation.templateUrl().isEmpty() ? ""
 				: "templateUrl: \"" + annotation.templateUrl() + "\",";
-		String aDirectives = "";
-		if (annotation.directives().length > 0) {
-			aDirectives = "directives: [";
-			for (int i = 0; i < annotation.directives().length; i++) {
-				if (i > 0)
-					aDirectives += ", ";
-				aDirectives += "@" + annotation.directives()[i] + HELPER_CLASS_SUFFIX + "::get()()";
+
+		// directives
+		StringBuilder directives = new StringBuilder();
+		Optional<? extends AnnotationMirror> optAnnotationMirror = element.getAnnotationMirrors().stream().filter(m -> {
+			return processingEnv.getTypeUtils().isSameType(m.getAnnotationType(),
+					processingEnv.getElementUtils().getTypeElement(AnnotationFqn).asType());
+		}).findFirst();
+		if (optAnnotationMirror.isPresent()) {
+			AnnotationMirror annotationMirror = optAnnotationMirror.get();
+			Optional<? extends ExecutableElement> optKey = annotationMirror.getElementValues().keySet().stream()
+					.filter(k -> k.getSimpleName().toString().equals("directives")).findFirst();
+			if (optKey.isPresent()) {
+				ExecutableElement key = optKey.get();
+				AnnotationValue value = annotationMirror.getElementValues().get(key);
+
+				value.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+					@Override
+					public Void visitArray(List<? extends AnnotationValue> vals, Void p) {
+						for (AnnotationValue v : vals) {
+							v.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+								public Void visitType(javax.lang.model.type.TypeMirror t, Void p) {
+									if (directives.length() == 0)
+										directives.append("directives: [");
+									else
+										directives.append(", ");
+
+									directives.append("@" + t.toString() + HELPER_CLASS_SUFFIX + "::get()()");
+									return null;
+								};
+							}, null);
+						}
+						return null;
+					}
+				}, null);
 			}
-			aDirectives += "]";
 		}
+		if (directives.length() > 0)
+			directives.append("],");
+
+		// providers
+		StringBuilder providers = new StringBuilder();
+		if (optAnnotationMirror.isPresent()) {
+			AnnotationMirror annotationMirror = optAnnotationMirror.get();
+			Optional<? extends ExecutableElement> optKey = annotationMirror.getElementValues().keySet().stream()
+					.filter(k -> k.getSimpleName().toString().equals("providers")).findFirst();
+			if (optKey.isPresent()) {
+				ExecutableElement key = optKey.get();
+				AnnotationValue value = annotationMirror.getElementValues().get(key);
+
+				value.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+					@Override
+					public Void visitArray(List<? extends AnnotationValue> vals, Void p) {
+						for (AnnotationValue v : vals) {
+							v.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+								public Void visitType(javax.lang.model.type.TypeMirror t, Void p) {
+									if (providers.length() == 0)
+										providers.append("providers: [");
+									else
+										providers.append(", ");
+
+									providers.append("$wnd." + t.toString());
+									return null;
+								};
+							}, null);
+						}
+						return null;
+					}
+				}, null);
+			}
+		}
+		if (providers.length() > 0)
+			providers.append("],");
 
 		// input fields
 		StringBuilder inputs = new StringBuilder();
@@ -99,10 +172,33 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		if (outputs.length() > 0)
 			outputs.append("],");
 
+		// parameters
+		// trouver le constructeur (soit aucun et c'est bon, soit un seul et
+		// c'est celui la, soit plusieurs et c'est celui qui a @JsConstructor
+		// parcourir ses paramètres, et les ajouter dans les métadonnées
+		StringBuilder parameters = new StringBuilder();
+		List<ExecutableElement> constructors = ElementFilter.constructorsIn(element.getEnclosedElements());
+		if (constructors != null && !constructors.isEmpty()) {
+			if (constructors.size() > 1) {
+				processingEnv.getMessager().printMessage(Kind.ERROR, "Multiple constructors not yet supported",
+						element);
+				return;
+			}
+
+			ExecutableElement constructor = constructors.get(0);
+			constructor.getParameters().forEach(p -> {
+				if (parameters.length() > 0)
+					parameters.append(", ");
+				parameters.append("$wnd." + p.asType().toString());
+			});
+		}
+
+		template = template.replace("PARAMETERS", parameters.toString());
 		template = template.replace("SELECTOR", aSelector);
 		template = template.replace("TEMPLATE_URL", aTemplateUrl);
 		template = template.replace("TEMPLATE", aTemplate);
-		template = template.replace("DIRECTIVES", aDirectives);
+		template = template.replace("DIRECTIVES", directives.toString());
+		template = template.replace("PROVIDERS", providers.toString());
 		template = template.replace("INPUTS", inputs.toString());
 		template = template.replace("OUTPUTS", outputs.toString());
 

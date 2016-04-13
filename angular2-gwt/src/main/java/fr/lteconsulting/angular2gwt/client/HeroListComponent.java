@@ -9,7 +9,8 @@ import jsinterop.annotations.JsType;
 @Component(
 		selector = "hero-list",
 		templateUrl = "hero-list.component.html",
-		directives = {"fr.lteconsulting.angular2gwt.client.HeroFormComponent"})
+		directives = {HeroFormComponent.class},
+		providers = {HeroService.class})
 //@formatter:on
 @JsType
 public class HeroListComponent
@@ -21,7 +22,18 @@ public class HeroListComponent
 	private Hero selectedHero;
 
 	@JsProperty
-	private JsArray<Hero> heroes = JsArray.of( new Hero( "Windstorm", "Do nothing", null ), new Hero( "Bombasto", "Do nothing", null ), new Hero( "Magneta", "Do nothing", null ), new Hero( "Tornado", "Do nothing", null ) );
+	private JsArray<Hero> heroes;
+
+	// public HeroListComponent()
+	// {
+	// heroes = JsArray.of( new Hero( "Windstorm", "Do nothing", null ), new Hero( "Bombasto", "Do nothing", null ), new Hero( "Magneta", "Do nothing", null ),
+	// new Hero( "Tornado", "Do nothing", null ) );
+	// }
+
+	public HeroListComponent( HeroService heroService )
+	{
+		this.heroes = heroService.getHeroes();
+	}
 
 	@JsMethod
 	private void onSelect( Hero hero )

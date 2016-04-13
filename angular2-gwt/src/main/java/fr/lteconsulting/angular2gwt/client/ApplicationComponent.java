@@ -7,7 +7,8 @@ import jsinterop.annotations.JsType;
 @Component(
 		selector = "my-app",
 		template = "<hero-list></hero-list>",
-		directives = {"fr.lteconsulting.angular2gwt.client.HeroListComponent"})
+		directives = {HeroListComponent.class}
+		)
 //@formatter:on
 @JsType
 public class ApplicationComponent

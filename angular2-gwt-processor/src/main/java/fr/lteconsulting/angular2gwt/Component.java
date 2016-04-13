@@ -14,5 +14,7 @@ public @interface Component {
 
 	String templateUrl() default "";
 
-	String[] directives() default {};
+	Class<?>[] directives() default {};
+
+	Class<?>[] providers() default {};
 }

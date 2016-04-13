@@ -5,12 +5,17 @@ public class CLASS_NAME
 	public static native Object get()
 	/*-{
 		var component = $wnd.COMPONENT_CLASS_FQN;
+		
+		component.parameters = component.parameters || [
+			PARAMETERS
+		];
 
 		component.annotations = component.annotations || [ new $wnd.ng.core.Component({
 			selector: "SELECTOR",
 			TEMPLATE
 			TEMPLATE_URL
 			DIRECTIVES
+			PROVIDERS
 			INPUTS
 			OUTPUTS
 		}) ];
