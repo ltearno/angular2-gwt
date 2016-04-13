@@ -1,5 +1,5 @@
 <div class="container">
-	<div [hidden]="submitted">
+	<div [hidden]="submitted" *ngIf="model">
 		<h1>Hero Form</h1>
 		<form *ngIf="active" (ngSubmit)="onSubmit()" #heroForm="ngForm">
 			<div class="form-group">
@@ -21,7 +21,7 @@
 			<button type="button" class="btn btn-default" (click)="newHero()">New Hero</button>
 		</form>
 	</div>
-	<div [hidden]="!submitted">
+	<div [hidden]="!submitted" *ngIf="model">
 		<h2>You submitted the following:</h2>
 		<div class="row">
 			<div class="col-xs-3">Name</div>

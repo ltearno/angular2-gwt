@@ -15,15 +15,16 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic.Kind;
-
-import fr.lteconsulting.angular2gwt.AngularComponent;
-
 import javax.tools.JavaFileObject;
+
+import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.Input;
+import fr.lteconsulting.angular2gwt.Output;
 
 @SupportedAnnotationTypes(AngularComponentProcessor.AnnotationFqn)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class AngularComponentProcessor extends AbstractProcessor {
-	public final static String AnnotationFqn = "fr.lteconsulting.angular2gwt.AngularComponent";
+	public final static String AnnotationFqn = "fr.lteconsulting.angular2gwt.Component";
 
 	private final static String HELPER_CLASS_SUFFIX = "_AngularComponent";
 
@@ -49,7 +50,7 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		template = template.replaceAll("CLASS_NAME", angularComponentName);
 		template = template.replaceAll("COMPONENT_CLASS_FQN", element.getQualifiedName().toString());
 
-		AngularComponent annotation = element.getAnnotation(AngularComponent.class);
+		Component annotation = element.getAnnotation(Component.class);
 
 		String aSelector = annotation.selector();
 		String aTemplate = annotation.template().isEmpty() ? "" : "template: \"" + annotation.template() + "\",";
@@ -66,10 +67,44 @@ public class AngularComponentProcessor extends AbstractProcessor {
 			aDirectives += "]";
 		}
 
+		// input fields
+		StringBuilder inputs = new StringBuilder();
+		ElementFilter.fieldsIn(processingEnv.getElementUtils().getAllMembers(element)).stream()
+				.filter(f -> f.getAnnotation(Input.class) != null).map(f -> f.getSimpleName().toString())
+				.forEach(name -> {
+					if (inputs.length() > 0)
+						inputs.append(", ");
+					else
+						inputs.append("inputs: [");
+					inputs.append("'");
+					inputs.append(name);
+					inputs.append("'");
+				});
+		if (inputs.length() > 0)
+			inputs.append("],");
+
+		// output fields
+		StringBuilder outputs = new StringBuilder();
+		ElementFilter.fieldsIn(processingEnv.getElementUtils().getAllMembers(element)).stream()
+				.filter(f -> f.getAnnotation(Output.class) != null).map(f -> f.getSimpleName().toString())
+				.forEach(name -> {
+					if (outputs.length() > 0)
+						outputs.append(", ");
+					else
+						outputs.append("outputs: [");
+					outputs.append("'");
+					outputs.append(name);
+					outputs.append("'");
+				});
+		if (outputs.length() > 0)
+			outputs.append("],");
+
 		template = template.replace("SELECTOR", aSelector);
 		template = template.replace("TEMPLATE_URL", aTemplateUrl);
 		template = template.replace("TEMPLATE", aTemplate);
 		template = template.replace("DIRECTIVES", aDirectives);
+		template = template.replace("INPUTS", inputs.toString());
+		template = template.replace("OUTPUTS", outputs.toString());
 
 		String targetClassFqn = packageName + "." + angularComponentName;
 

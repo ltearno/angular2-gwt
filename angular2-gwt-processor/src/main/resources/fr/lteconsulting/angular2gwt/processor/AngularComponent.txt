@@ -11,6 +11,8 @@ public class CLASS_NAME
 			TEMPLATE
 			TEMPLATE_URL
 			DIRECTIVES
+			INPUTS
+			OUTPUTS
 		}) ];
 
 		return component;

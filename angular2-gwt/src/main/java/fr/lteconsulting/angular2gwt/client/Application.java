@@ -25,7 +25,7 @@ public class Application implements EntryPoint
 		/**
 		 * Here we just bootstrap the Angular 2 framework with our application controller.
 		 * 
-		 * The application controller is implemented in the {@link HeroListComponent} class
+		 * The application controller is implemented in the {@link ApplicationComponent} class
 		 */
 		Browser.bootstrap( ApplicationComponent_AngularComponent.get() );
 	}

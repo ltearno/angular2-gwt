@@ -1,14 +1,13 @@
 package fr.lteconsulting.angular2gwt.client;
 
-import com.google.gwt.core.client.GWT;
-
-import fr.lteconsulting.angular2gwt.AngularComponent;
+import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.Input;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 //@formatter:off
-@AngularComponent(
+@Component(
 		selector = "hero-form",
 		templateUrl = "hero-form.component.html")
 //@formatter:on
@@ -16,10 +15,11 @@ import jsinterop.annotations.JsType;
 public class HeroFormComponent
 {
 	@JsProperty
-	private JsArray<String> powers = JsArray.of( "Really Smart", "Super Flexible", "Super Hot", "Weather Changer" );
+	private JsArray<String> powers = JsArray.of( "Really Smart", "Super Flexible", "Super Hot", "Weather Changer", "Do nothing" );
 
+	@Input
 	@JsProperty
-	private Hero model = new Hero( "Dr IQ", powers.get( 0 ), "Chuck Overstreet" );
+	private Hero model;
 
 	@JsProperty
 	private boolean submitted = false;
