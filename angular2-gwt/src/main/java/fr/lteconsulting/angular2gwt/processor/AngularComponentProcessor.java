@@ -107,7 +107,14 @@ public class AngularComponentProcessor extends AbstractProcessor {
 									else
 										directives.append(", ");
 
-									directives.append("@" + t.toString() + HELPER_CLASS_SUFFIX + "::get()()");
+									String name = t.toString();
+									String output;
+									if ("fr.lteconsulting.angular2gwt.RouterDirectives".equals(name))
+										output = "$wnd.ng.router.ROUTER_DIRECTIVES";
+									else
+										output = "@" + name + HELPER_CLASS_SUFFIX + "::get()()";
+
+									directives.append(output);
 									return null;
 								};
 							}, null);
@@ -141,7 +148,11 @@ public class AngularComponentProcessor extends AbstractProcessor {
 									else
 										providers.append(", ");
 
-									providers.append("$wnd." + t.toString());
+									String name = t.toString();
+									if ("fr.lteconsulting.angular2gwt.RouterProviders".equals(name))
+										name = "ng.router.ROUTER_PROVIDERS";
+
+									providers.append("$wnd." + name);
 									return null;
 								};
 							}, null);

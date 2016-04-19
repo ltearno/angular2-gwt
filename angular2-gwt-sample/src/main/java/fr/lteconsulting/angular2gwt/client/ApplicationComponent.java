@@ -1,6 +1,9 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.RouteConfig;
+import fr.lteconsulting.angular2gwt.RouterDirectives;
+import fr.lteconsulting.angular2gwt.RouterProviders;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -19,11 +22,14 @@ import jsinterop.annotations.JsType;
  */
 //@formatter:off
 @Component(
-		selector = "my-app",
-		template = "<h1>{{title}}</h1><my-heroes></my-heroes>",
-		directives = {HeroesComponent.class},
-		providers = {HeroService.class}
-		)
+	selector = "my-app",
+	template = "<h1>{{title}}</h1><a [routerLink]=\\\"['Heroes']\\\">Heroes</a><router-outlet></router-outlet>",
+	directives = {RouterDirectives.class},
+	providers = {HeroService.class, RouterProviders.class} )
+@RouteConfig(
+    path= "/heroes",
+    name= "Heroes",
+    component= HeroesComponent.class )
 //@formatter:on
 @JsType
 public class ApplicationComponent
