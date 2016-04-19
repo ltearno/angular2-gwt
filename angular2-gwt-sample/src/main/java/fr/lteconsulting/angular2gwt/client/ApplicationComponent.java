@@ -1,6 +1,7 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
@@ -19,12 +20,14 @@ import jsinterop.annotations.JsType;
 //@formatter:off
 @Component(
 		selector = "my-app",
-		template = "<hero-list></hero-list>",
-		directives = {HeroListComponent.class},
+		template = "<h1>{{title}}</h1><my-heroes></my-heroes>",
+		directives = {HeroesComponent.class},
 		providers = {HeroService.class}
 		)
 //@formatter:on
 @JsType
 public class ApplicationComponent
 {
+	@JsProperty
+	private String title = "Tour of Heroes";
 }

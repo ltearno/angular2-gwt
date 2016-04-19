@@ -1,22 +1,27 @@
 <!doctype html>
 <html>
 <head>
+<!-- for Angular Router library, can be removed if Router is not used -->
+<base href="/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8" />
 
 <title>Angular 2 with GWT !</title>
 
-<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap.min.css"><!-- node_modules/bootstrap/dist/css/ -->
 
 <!-- Angular 2 runtime, sorry that's big for a hello world -->
 <!-- but that is how Javascript ecosystem works... -->
-<script src="node_modules/es6-shim/es6-shim.min.js"></script>
-<script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-<script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-<script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
+<script src="es6-shim.min.js"></script><!-- node_modules/es6-shim/ -->
+<script src="shims_for_IE.js"></script><!-- node_modules/angular2/es6/dev/src/testing/ -->
+<script src="angular2-polyfills.js"></script><!-- node_modules/angular2/bundles/ -->
+<script src="Rx.umd.js"></script><!-- node_modules/rxjs/bundles/ -->
 
 <!-- This is a very slightly modified version of Angular, to work with the SuperDevMode -->
 <script src="angular2-all.umd.js"></script>
+
+<!-- Angular Router library, can be removed if Router is not used -->
+<script src="router.dev.js"></script>
 
 <script type="text/javascript" src="angular2gwt/angular2gwt.nocache.js"></script>
 
