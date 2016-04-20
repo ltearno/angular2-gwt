@@ -20,7 +20,9 @@ public class CLASS_NAME
 			PROVIDERS
 			INPUTS
 			OUTPUTS
-		}) ];
+		})
+		ROUTECONFIGS
+		];
 
 		return component;
 	}-*/;

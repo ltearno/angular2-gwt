@@ -3,10 +3,13 @@ package fr.lteconsulting.angular2gwt.processor;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -26,6 +29,8 @@ import javax.tools.JavaFileObject;
 import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
 import fr.lteconsulting.angular2gwt.Output;
+import fr.lteconsulting.angular2gwt.RouteConfigs;
+import fr.lteconsulting.angular2gwt.RouteParams;
 
 @SupportedAnnotationTypes(AngularComponentProcessor.AnnotationFqn)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -84,55 +89,38 @@ public class AngularComponentProcessor extends AbstractProcessor {
 
 		// directives
 		StringBuilder directives = new StringBuilder();
-		Optional<? extends AnnotationMirror> optAnnotationMirror = element.getAnnotationMirrors().stream().filter(m -> {
-			return processingEnv.getTypeUtils().isSameType(m.getAnnotationType(),
-					processingEnv.getElementUtils().getTypeElement(AnnotationFqn).asType());
-		}).findFirst();
-		if (optAnnotationMirror.isPresent()) {
-			AnnotationMirror annotationMirror = optAnnotationMirror.get();
-			Optional<? extends ExecutableElement> optKey = annotationMirror.getElementValues().keySet().stream()
-					.filter(k -> k.getSimpleName().toString().equals("directives")).findFirst();
-			if (optKey.isPresent()) {
-				ExecutableElement key = optKey.get();
-				AnnotationValue value = annotationMirror.getElementValues().get(key);
-
-				value.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
-					@Override
-					public Void visitArray(List<? extends AnnotationValue> vals, Void p) {
-						for (AnnotationValue v : vals) {
-							v.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
-								public Void visitType(javax.lang.model.type.TypeMirror t, Void p) {
-									if (directives.length() == 0)
-										directives.append("directives: [");
-									else
-										directives.append(", ");
-
-									String name = t.toString();
-									String output;
-									if ("fr.lteconsulting.angular2gwt.RouterDirectives".equals(name))
-										output = "$wnd.ng.router.ROUTER_DIRECTIVES";
-									else
-										output = "@" + name + HELPER_CLASS_SUFFIX + "::get()()";
-
-									directives.append(output);
-									return null;
-								};
-							}, null);
-						}
-						return null;
-					}
-				}, null);
-			}
-		}
-		if (directives.length() > 0)
+		List<String> directiveClassNames = getAnnotationClassListValue(element, AnnotationFqn, "directives");
+		if (!directiveClassNames.isEmpty()) {
+			directives.append("directives: [");
+			directives.append(directiveClassNames.stream()
+					.map(name -> "fr.lteconsulting.angular2gwt.RouterDirectives".equals(name)
+							? "$wnd.ng.router.ROUTER_DIRECTIVES" : ("@" + name + HELPER_CLASS_SUFFIX + "::get()()"))
+					.collect(Collectors.joining(", ")));
 			directives.append("],");
+		}
 
 		// providers
 		StringBuilder providers = new StringBuilder();
-		if (optAnnotationMirror.isPresent()) {
-			AnnotationMirror annotationMirror = optAnnotationMirror.get();
+		List<String> providerClassNames = getAnnotationClassListValue(element, AnnotationFqn, "providers");
+		if (!providerClassNames.isEmpty()) {
+			providers.append("providers: [");
+			providers
+					.append(providerClassNames.stream()
+							.map(name -> "fr.lteconsulting.angular2gwt.RouterProviders".equals(name)
+									? "$wnd.ng.router.ROUTER_PROVIDERS" : ("$wnd." + name))
+							.collect(Collectors.joining(", ")));
+			providers.append("],");
+		}
+
+		// routeconfigs
+		List<RouteConfigDto> routeConfigs = new ArrayList<>();
+		element.getAnnotationMirrors().stream().filter(m -> {
+			System.out.println(m.getAnnotationType().toString());
+			return processingEnv.getTypeUtils().isSameType(m.getAnnotationType(),
+					processingEnv.getElementUtils().getTypeElement(RouteConfigs.class.getName()).asType());
+		}).forEach(annotationMirror -> {
 			Optional<? extends ExecutableElement> optKey = annotationMirror.getElementValues().keySet().stream()
-					.filter(k -> k.getSimpleName().toString().equals("providers")).findFirst();
+					.filter(k -> k.getSimpleName().toString().equals("value")).findFirst();
 			if (optKey.isPresent()) {
 				ExecutableElement key = optKey.get();
 				AnnotationValue value = annotationMirror.getElementValues().get(key);
@@ -142,28 +130,35 @@ public class AngularComponentProcessor extends AbstractProcessor {
 					public Void visitArray(List<? extends AnnotationValue> vals, Void p) {
 						for (AnnotationValue v : vals) {
 							v.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
-								public Void visitType(javax.lang.model.type.TypeMirror t, Void p) {
-									if (providers.length() == 0)
-										providers.append("providers: [");
-									else
-										providers.append(", ");
+								@Override
+								public Void visitAnnotation(AnnotationMirror annotationMirror, Void p) {
+									RouteConfigDto dto = new RouteConfigDto();
+									routeConfigs.add(dto);
 
-									String name = t.toString();
-									if ("fr.lteconsulting.angular2gwt.RouterProviders".equals(name))
-										name = "ng.router.ROUTER_PROVIDERS";
+									for (Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : annotationMirror
+											.getElementValues().entrySet()) {
+										String name = entry.getKey().getSimpleName().toString();
+										Object value = entry.getValue().getValue();
 
-									providers.append("$wnd." + name);
+										dto.set(name, value);
+									}
 									return null;
-								};
+								}
 							}, null);
 						}
 						return null;
 					}
 				}, null);
 			}
+
+		});
+		StringBuilder routeConfisBuilder = new StringBuilder();
+		if (!routeConfigs.isEmpty()) {
+			routeConfisBuilder.append(", new $wnd.ng.router.RouteConfig([");
+			for (RouteConfigDto dto : routeConfigs)
+				routeConfisBuilder.append(dto.toString() + ", ");
+			routeConfisBuilder.append("])");
 		}
-		if (providers.length() > 0)
-			providers.append("],");
 
 		// input fields
 		StringBuilder inputs = new StringBuilder();
@@ -214,7 +209,11 @@ public class AngularComponentProcessor extends AbstractProcessor {
 			constructor.getParameters().forEach(p -> {
 				if (parameters.length() > 0)
 					parameters.append(", ");
-				parameters.append("$wnd." + p.asType().toString());
+				String fqn = p.asType().toString();
+				if (RouteParams.class.getName().equals(fqn))
+					parameters.append("$wnd.ng.router.RouteParams");
+				else
+					parameters.append("$wnd." + fqn);
 			});
 		}
 
@@ -228,6 +227,7 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		template = template.replace("PROVIDERS", providers.toString());
 		template = template.replace("INPUTS", inputs.toString());
 		template = template.replace("OUTPUTS", outputs.toString());
+		template = template.replace("ROUTECONFIGS", routeConfisBuilder.toString());
 
 		String targetClassFqn = packageName + "." + angularComponentName;
 
@@ -243,6 +243,71 @@ public class AngularComponentProcessor extends AbstractProcessor {
 			e.printStackTrace();
 			processingEnv.getMessager().printMessage(Kind.ERROR, "AngularComponent non généré !" + e, element);
 		}
+	}
+
+	static class RouteConfigDto {
+		String path;
+		String name;
+		String component;
+		boolean useAsDefault;
+
+		void set(String fieldName, Object value) {
+			if ("name".equals(fieldName))
+				name = String.valueOf(value);
+			else if ("path".equals(fieldName))
+				path = String.valueOf(value);
+			else if ("component".equals(fieldName))
+				component = String.valueOf(value);
+			else if ("useAsDefault".equals(fieldName))
+				useAsDefault = "true".equals(String.valueOf(value));
+		}
+
+		@Override
+		public String toString() {
+			// "@" + name + HELPER_CLASS_SUFFIX + "::get()()"
+			return "{ path: '" + path + "', name: '" + name + "', component: @" + component + HELPER_CLASS_SUFFIX
+					+ "::get()(), " + (useAsDefault ? "useAsDefault: true" : "") + "}";
+			// return "{ path: '" + path + "', name: '" + name + "', component:
+			// $wnd." + component + "}";
+		}
+	}
+
+	private List<String> getAnnotationClassListValue(TypeElement element, String annotationFqn,
+			String annotationFieldName) {
+		List<String> result = new ArrayList<>();
+
+		Optional<? extends AnnotationMirror> optAnnotationMirror = element.getAnnotationMirrors().stream().filter(m -> {
+			return processingEnv.getTypeUtils().isSameType(m.getAnnotationType(),
+					processingEnv.getElementUtils().getTypeElement(annotationFqn).asType());
+		}).findFirst();
+
+		if (optAnnotationMirror.isPresent()) {
+			AnnotationMirror annotationMirror = optAnnotationMirror.get();
+			Optional<? extends ExecutableElement> optKey = annotationMirror.getElementValues().keySet().stream()
+					.filter(k -> k.getSimpleName().toString().equals(annotationFieldName)).findFirst();
+			if (optKey.isPresent()) {
+				ExecutableElement key = optKey.get();
+				AnnotationValue value = annotationMirror.getElementValues().get(key);
+
+				value.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+					@Override
+					public Void visitArray(List<? extends AnnotationValue> vals, Void p) {
+						for (AnnotationValue v : vals) {
+							v.accept(new SimpleAnnotationValueVisitor8<Void, Void>() {
+								public Void visitType(javax.lang.model.type.TypeMirror t, Void p) {
+									String name = t.toString();
+									result.add(name);
+									return null;
+								};
+							}, null);
+						}
+						return null;
+					}
+				}, null);
+			}
+		}
+
+		return result;
 	}
 
 	@SuppressWarnings("resource")

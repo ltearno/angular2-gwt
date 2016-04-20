@@ -25,4 +25,15 @@ public class HeroService
 	{
 		heroes.push( hero );
 	}
+
+	public Hero getHero( int id )
+	{
+		for( Hero h : heroes.iterate() )
+		{
+			if( h.getId() == id )
+				return h;
+		}
+
+		return null;
+	}
 }

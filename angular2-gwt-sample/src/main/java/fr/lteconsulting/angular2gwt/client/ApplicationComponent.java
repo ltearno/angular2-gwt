@@ -23,13 +23,22 @@ import jsinterop.annotations.JsType;
 //@formatter:off
 @Component(
 	selector = "my-app",
-	template = "<h1>{{title}}</h1><a [routerLink]=\\\"['Heroes']\\\">Heroes</a><router-outlet></router-outlet>",
+	template = "<h1>{{title}}</h1><nav><a [routerLink]=\\\"['Dashboard']\\\">Dashboard</a><a [routerLink]=\\\"['Heroes']\\\">Heroes</a></nav><router-outlet></router-outlet>",
 	directives = {RouterDirectives.class},
 	providers = {HeroService.class, RouterProviders.class} )
 @RouteConfig(
     path= "/heroes",
     name= "Heroes",
     component= HeroesComponent.class )
+@RouteConfig(
+	path= "/dashboard",
+	name= "Dashboard",
+	component= DashboardComponent.class,
+	useAsDefault= true )
+@RouteConfig(
+	path="/detail/:id",
+	name= "HeroDetail",
+	component= HeroFormComponent.class)
 //@formatter:on
 @JsType
 public class ApplicationComponent

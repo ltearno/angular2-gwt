@@ -17,6 +17,7 @@
 				</select>
 				<div [hidden]="power.valid || power.pristine" class="alert alert-danger">Power is required</div>
 			</div>
+			<button (click)="goBack()">Back</button>
 			<button type="submit" class="btn btn-default" [disabled]="!heroForm.form.valid">Submit</button>
 			<button type="button" class="btn btn-default" (click)="newHero()">New Hero</button>
 		</form>
@@ -36,6 +37,7 @@
 			<div class="col-xs-9 pull-left">{{ model.power }}</div>
 		</div>
 		<br>
+		<button (click)="goBack()">Back</button>
 		<button class="btn btn-default" (click)="submitted=false">Edit</button>
 	</div>
 </div>

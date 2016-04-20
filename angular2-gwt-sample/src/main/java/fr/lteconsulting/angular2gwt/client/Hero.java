@@ -34,6 +34,11 @@ public class Hero
 		this.power = power;
 		this.alterEgo = alterEgo;
 	}
+
+	public int getId()
+	{
+		return id;
+	}
 }
 
 /**

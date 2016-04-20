@@ -9,4 +9,6 @@ public @interface RouteConfig {
 	String name();
 
 	Class<?> component();
+
+	boolean useAsDefault() default false;
 }
