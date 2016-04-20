@@ -28763,7 +28763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var lang_1 = __webpack_require__(5);
 	var interfaces_1 = __webpack_require__(170);
 	function hasLifecycleHook(lcInterface, token) {
-	    if (!(token instanceof lang_1.Type))
+	    if (!((token instanceof lang_1.Type)||(typeof token === typeof lang_1.Type)))
 	        return false;
 	    var proto = token.prototype;
 	    switch (lcInterface) {

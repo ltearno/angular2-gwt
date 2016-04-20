@@ -1,7 +1,5 @@
 package fr.lteconsulting.angular2gwt.client;
 
-import com.google.gwt.core.shared.GWT;
-
 import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
 import jsinterop.annotations.JsConstructor;
@@ -64,8 +62,6 @@ public class HeroFormComponent
 	@JsMethod
 	private void ngOnInit()
 	{
-		GWT.debugger();
-		GWT.log( "ngOnInit" );
 		Object oId = routeParams.get( "id" );
 		int id = Integer.parseInt( String.valueOf( oId ) );
 		Hero hero = heroService.getHero( id );
@@ -75,7 +71,6 @@ public class HeroFormComponent
 	@JsMethod
 	private void goBack()
 	{
-		GWT.debugger();
 		back();
 	}
 

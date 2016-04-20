@@ -1,7 +1,5 @@
 package fr.lteconsulting.angular2gwt.client;
 
-import com.google.gwt.core.client.GWT;
-
 import fr.lteconsulting.angular2gwt.Component;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
@@ -31,13 +29,10 @@ public class DashboardComponent
 		this.router = router;
 	}
 
-	// TODO Not called, maybe also a check against typeof prevents it...
 	@JsMethod
 	void ngOnInit()
 	{
 		heroes = heroService.getHeroes().slice( 1, 5 );
-
-		GWT.log( "NG ON INIT !!!, lenght=" + heroes.length() );
 	}
 
 	@JsMethod
