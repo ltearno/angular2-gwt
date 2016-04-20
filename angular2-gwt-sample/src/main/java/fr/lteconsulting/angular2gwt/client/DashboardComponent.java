@@ -3,7 +3,6 @@ package fr.lteconsulting.angular2gwt.client;
 import com.google.gwt.core.client.GWT;
 
 import fr.lteconsulting.angular2gwt.Component;
-import fr.lteconsulting.angular2gwt.Router;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;

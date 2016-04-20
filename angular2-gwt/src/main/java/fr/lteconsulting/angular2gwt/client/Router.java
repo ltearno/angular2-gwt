@@ -1,6 +1,5 @@
-package fr.lteconsulting.angular2gwt;
+package fr.lteconsulting.angular2gwt.client;
 
-import fr.lteconsulting.angular2gwt.client.JsArray;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsType;
 

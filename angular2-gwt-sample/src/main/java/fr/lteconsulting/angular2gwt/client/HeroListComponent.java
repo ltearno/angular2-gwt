@@ -3,7 +3,6 @@ package fr.lteconsulting.angular2gwt.client;
 import com.google.gwt.core.client.GWT;
 
 import fr.lteconsulting.angular2gwt.Component;
-import fr.lteconsulting.angular2gwt.Router;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
@@ -30,6 +29,7 @@ import jsinterop.annotations.JsType;
 @JsType
 public class HeroListComponent
 {
+	@JsProperty
 	private Router router;
 
 	@JsProperty
@@ -49,13 +49,13 @@ public class HeroListComponent
 	}
 
 	@JsMethod
-	private void onSelect( Hero hero )
+	protected void onSelect( Hero hero )
 	{
 		selectedHero = hero;
 	}
 
 	@JsMethod
-	private void gotoDetail( Hero hero )
+	protected void gotoDetail( Hero hero )
 	{
 		// TODO : this needs to be more user friendly
 

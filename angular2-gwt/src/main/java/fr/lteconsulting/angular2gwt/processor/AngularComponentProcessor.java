@@ -30,7 +30,10 @@ import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
 import fr.lteconsulting.angular2gwt.Output;
 import fr.lteconsulting.angular2gwt.RouteConfigs;
-import fr.lteconsulting.angular2gwt.RouteParams;
+import fr.lteconsulting.angular2gwt.client.RouteParams;
+import fr.lteconsulting.angular2gwt.client.Router;
+import fr.lteconsulting.angular2gwt.client.RouterDirectives;
+import fr.lteconsulting.angular2gwt.client.RouterProviders;
 
 @SupportedAnnotationTypes(AngularComponentProcessor.AnnotationFqn)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -93,7 +96,7 @@ public class AngularComponentProcessor extends AbstractProcessor {
 		if (!directiveClassNames.isEmpty()) {
 			directives.append("directives: [");
 			directives.append(directiveClassNames.stream()
-					.map(name -> "fr.lteconsulting.angular2gwt.RouterDirectives".equals(name)
+					.map(name -> RouterDirectives.class.getName().equals(name)
 							? "$wnd.ng.router.ROUTER_DIRECTIVES" : ("@" + name + HELPER_CLASS_SUFFIX + "::get()()"))
 					.collect(Collectors.joining(", ")));
 			directives.append("],");
@@ -106,7 +109,7 @@ public class AngularComponentProcessor extends AbstractProcessor {
 			providers.append("providers: [");
 			providers
 					.append(providerClassNames.stream()
-							.map(name -> "fr.lteconsulting.angular2gwt.RouterProviders".equals(name)
+							.map(name -> RouterProviders.class.getName().equals(name)
 									? "$wnd.ng.router.ROUTER_PROVIDERS" : ("$wnd." + name))
 							.collect(Collectors.joining(", ")));
 			providers.append("],");
@@ -212,6 +215,8 @@ public class AngularComponentProcessor extends AbstractProcessor {
 				String fqn = p.asType().toString();
 				if (RouteParams.class.getName().equals(fqn))
 					parameters.append("$wnd.ng.router.RouteParams");
+				else if(Router.class.getName().equals(fqn))
+					parameters.append("$wnd.ng.router.Router");
 				else
 					parameters.append("$wnd." + fqn);
 			});

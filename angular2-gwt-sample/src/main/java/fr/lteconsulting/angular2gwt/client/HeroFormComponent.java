@@ -4,7 +4,6 @@ import com.google.gwt.core.shared.GWT;
 
 import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
-import fr.lteconsulting.angular2gwt.RouteParams;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
