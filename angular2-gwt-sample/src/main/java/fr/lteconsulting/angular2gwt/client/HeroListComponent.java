@@ -1,7 +1,5 @@
 package fr.lteconsulting.angular2gwt.client;
 
-import com.google.gwt.core.client.GWT;
-
 import fr.lteconsulting.angular2gwt.Component;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
@@ -57,14 +55,6 @@ public class HeroListComponent
 	@JsMethod
 	protected void gotoDetail( Hero hero )
 	{
-		// TODO : this needs to be more user friendly
-
-		GWT.debugger();
-		JsArray<Object> link = new JsArray<>();
-		link.push( "$wnd." + HeroFormComponent.class.getName() );
-		LinkDto linkDto = new LinkDto();
-		linkDto.id = String.valueOf( hero.getId() );
-		link.push( linkDto );
-		router.navigate( link );
+		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
 	}
 }

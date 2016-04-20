@@ -1,6 +1,7 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import java.util.Iterator;
+import java.util.List;
 
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsOverlay;
@@ -13,6 +14,9 @@ import jsinterop.annotations.JsType;
  * 
  * <p>
  * Gives to methods to convert between this and Java arrays.
+ * 
+ * <p>
+ * <i>TODO</i>implement {@link List}
  */
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Array")
 public class JsArray<T> {

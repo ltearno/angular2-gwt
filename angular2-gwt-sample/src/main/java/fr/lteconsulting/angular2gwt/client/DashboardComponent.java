@@ -29,8 +29,6 @@ public class DashboardComponent
 	{
 		this.heroService = heroService;
 		this.router = router;
-
-		GWT.log( "Dashboard constructor, " + heroService );
 	}
 
 	// TODO Not called, maybe also a check against typeof prevents it...
@@ -45,15 +43,7 @@ public class DashboardComponent
 	@JsMethod
 	private void gotoDetail( Hero hero )
 	{
-		// TODO : this needs to be more user friendly
-
-		GWT.debugger();
-		JsArray<Object> link = new JsArray<>();
-		link.push( "$wnd." + HeroFormComponent.class.getName() );
-		LinkDto linkDto = new LinkDto();
-		linkDto.id = String.valueOf( hero.getId() );
-		link.push( linkDto );
-		router.navigate( link );
+		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
 	}
 }
 
@@ -61,5 +51,10 @@ public class DashboardComponent
 class LinkDto
 {
 	@JsProperty
-	String id;
+	int id;
+
+	public LinkDto( int id )
+	{
+		this.id = id;
+	}
 }
