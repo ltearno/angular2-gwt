@@ -27,7 +27,7 @@ import jsinterop.annotations.JsType;
 @JsType
 public class HeroListComponent
 {
-	@JsProperty
+	private HeroService heroService;
 	private Router router;
 
 	@JsProperty
@@ -42,8 +42,11 @@ public class HeroListComponent
 	@JsConstructor
 	public HeroListComponent( HeroService heroService, Router router )
 	{
+		this.heroService = heroService;
 		this.heroes = heroService.getHeroes();
 		this.router = router;
+
+		title = "Heroes list";
 	}
 
 	@JsMethod
@@ -56,5 +59,14 @@ public class HeroListComponent
 	protected void gotoDetail( Hero hero )
 	{
 		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
+	}
+
+	@JsMethod
+	private void newHero()
+	{
+		Hero model = new Hero( "<no name>", "", null );
+		heroService.addHero( model );
+
+		gotoDetail( model );
 	}
 }

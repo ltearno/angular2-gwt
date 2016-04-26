@@ -51,15 +51,6 @@ public class HeroFormComponent
 	}
 
 	@JsMethod
-	private void newHero()
-	{
-		model = new Hero( "<no name>", "", null );
-		heroService.addHero( model );
-		active = false;
-		JsTools.setTimeout( () -> active = true, 0 );
-	}
-
-	@JsMethod
 	private void ngOnInit()
 	{
 		Object oId = routeParams.get( "id" );

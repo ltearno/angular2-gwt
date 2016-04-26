@@ -3,7 +3,6 @@ package fr.lteconsulting.angular2gwt.client;
 import fr.lteconsulting.angular2gwt.Component;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -42,7 +41,7 @@ public class DashboardComponent
 	}
 }
 
-@JsType( namespace = JsPackage.GLOBAL, name = "Object" )
+@JsType
 class LinkDto
 {
 	@JsProperty

@@ -26,5 +26,7 @@ public class Application implements EntryPoint
 		 * The application controller is implemented in the {@link ApplicationComponent} class
 		 */
 		Angular.bootstrap( ApplicationComponent_AngularComponent.get() );
+//		GWT.debugger();
+//		Angular.bootstrap( ApplicationComponent_AngularComponent.get(), JsArray.of( RouterProviders.class, Angular.provide( LocationStrategy.class, new LocationStrategyOptions( HashLocationStrategy.class ) ) ) );
 	}
 }

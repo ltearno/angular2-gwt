@@ -27,12 +27,12 @@ import jsinterop.annotations.JsType;
 @RouteConfig(
     path= "/heroes",
     name= "Heroes",
+    useAsDefault= true,
     component= HeroesComponent.class )
 @RouteConfig(
 	path= "/dashboard",
 	name= "Dashboard",
-	component= DashboardComponent.class,
-	useAsDefault= true )
+	component= DashboardComponent.class )
 @RouteConfig(
 	path="/detail/:id",
 	name= "HeroDetail",
