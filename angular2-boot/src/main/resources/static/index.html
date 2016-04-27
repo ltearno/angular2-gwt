@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<!-- for Angular Router library, can be removed if Router is not used -->
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+
+<title>Angular 2 with GWT and SpringBoot !</title>
+
+<link rel="stylesheet" href="bootstrap.min.css"><!-- node_modules/bootstrap/dist/css/ -->
+
+<!-- Angular 2 runtime, sorry that's big for a hello world -->
+<!-- but that is how Javascript ecosystem works... -->
+<script src="es6-shim.min.js"></script><!-- node_modules/es6-shim/ -->
+<script src="shims_for_IE.js"></script><!-- node_modules/angular2/es6/dev/src/testing/ -->
+<script src="angular2-polyfills.js"></script><!-- node_modules/angular2/bundles/ -->
+<script src="Rx.umd.js"></script><!-- node_modules/rxjs/bundles/ -->
+
+<!-- This is a very slightly modified version of Angular, to work with the SuperDevMode -->
+<script src="angular2-all.umd.js"></script>
+
+<!-- GWT application script -->
+<script src="angular2gwt/angular2gwt.nocache.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		<img src="angular2gwt.png" height="100px">
+	</div>
+
+	<!-- This tag will be handled by the ApplicationComponent angular component class -->
+	<my-app>Application is loading...</my-app>
+
+	<div class="container">
+		This application's code is available on <a href="https://github.com/ltearno/angular2-gwt">GitHub</a>
+	</div>
+</body>
+</html>

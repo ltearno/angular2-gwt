@@ -1,0 +1,21 @@
+<div class="container">
+	<h1>{{model.name}} edition form</h1>
+	<form *ngIf="active" (ngSubmit)="onSubmit()" #heroForm="ngForm">
+		<div class="form-group">
+			<label for="name">Name</label> <input type="text" class="form-control" required
+          [(ngModel)]="model.name" ngControl="name" #name="ngForm">
+			<div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div>
+		</div>
+		<div class="form-group">
+			<label for="alterEgo">Alter Ego</label> <input type="text" class="form-control" [(ngModel)]="model.alterEgo" ngControl="alterEgo">
+		</div>
+		<div class="form-group">
+			<label for="power">Hero Power</label> <select class="form-control" required
+          [(ngModel)]="model.power" ngControl="power" #power="ngForm">
+				<option *ngFor="#p of powers" [value]="p">{{p}}</option>
+			</select>
+			<div [hidden]="power.valid || power.pristine" class="alert alert-danger">Power is required</div>
+		</div>
+		<button (click)="goBack()" class="btn btn-default">Back</button>
+	</form>
+</div>

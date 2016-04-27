@@ -12,6 +12,7 @@
     <modules>
         <module>angular2-gwt</module>
         <module>angular2-gwt-sample</module>
+        <module>angular2-boot</module>
     </modules>
     <developers>
         <developer>
