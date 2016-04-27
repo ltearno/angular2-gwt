@@ -1,14 +1,6 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
-
-import fr.lteconsulting.angular2gwt.client.tools.Executor;
-import fr.lteconsulting.angular2gwt.client.tools.Promise;
-import fr.lteconsulting.angular2gwt.client.tools.Rejection;
-import fr.lteconsulting.angular2gwt.client.tools.Rejector;
-import fr.lteconsulting.angular2gwt.client.tools.Resolution;
-import fr.lteconsulting.angular2gwt.client.tools.Resolver;
 
 /**
  * This is a very first step trying to integrate Angular 2 with GWT 2.8
@@ -28,30 +20,6 @@ public class Application implements EntryPoint
 	@Override
 	public void onModuleLoad()
 	{
-		Promise p = new Promise( new Executor()
-		{
-			@Override
-			public void execute( Resolver resolver, Rejector rejecter )
-			{
-				GWT.log( "EXEC PROMISE" );
-				resolver.resolve( "toto" );
-			}
-		} );
-		p.then( new Resolution()
-		{
-			@Override
-			public void resolved( Object value )
-			{
-				GWT.log( "RECEIVE VALUE " + value );
-			}
-		}, new Rejection()
-		{
-			@Override
-			public void rejected( Object error )
-			{
-				GWT.log( "RECEIVE ERROR " + error );
-			}
-		} );
 		/**
 		 * Here we just bootstrap the Angular 2 framework with our application controller.
 		 * 

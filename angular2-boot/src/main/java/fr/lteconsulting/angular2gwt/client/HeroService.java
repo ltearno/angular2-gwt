@@ -2,9 +2,11 @@ package fr.lteconsulting.angular2gwt.client;
 
 import com.google.gwt.core.shared.GWT;
 
+import fr.lteconsulting.angular2gwt.client.tools.Ajax;
 import fr.lteconsulting.angular2gwt.client.tools.AngularTools;
 import fr.lteconsulting.angular2gwt.client.tools.JSON;
-import fr.lteconsulting.angular2gwt.client.tools.XMLHttpRequest;
+import fr.lteconsulting.angular2gwt.client.tools.promise.Rejection;
+import fr.lteconsulting.angular2gwt.client.tools.promise.Resolution;
 import jsinterop.annotations.JsType;
 
 /**
@@ -23,25 +25,23 @@ public class HeroService
 
 	public HeroService()
 	{
-		String url = "heroes";
-		XMLHttpRequest req = new XMLHttpRequest();
-		req.open( "GET", url, true );
-		req.setOnreadystatechange( event -> {
-			if( req.getReadyState() == 4 )
+		Ajax.sendRequest( "GET", "heroes" ).then( new Resolution<String>()
+		{
+			@Override
+			public void resolved( String value )
 			{
-				if( req.getStatus() == 200 )
-				{
-					JsArray<Object> os = JSON.parse( req.getResponseText() );
-					heroes = AngularTools.convertDtoList( os, Hero.class );
-					GWT.log( "result length: " + heroes.length() + ": " + heroes );
-				}
-				else
-				{
-					GWT.log( "error fetching service data with url " + url );
-				}
+				JsArray<Object> os = JSON.parse( value );
+				heroes = AngularTools.convertDtoList( os, Hero.class );
+				GWT.log( "result length: " + heroes.length() + ": " + heroes );
+			}
+		}, new Rejection<Object>()
+		{
+			@Override
+			public void rejected( Object error )
+			{
+				GWT.log( "ajax error ! " + error );
 			}
 		} );
-		req.send( null );
 	}
 
 	public JsArray<Hero> getHeroes()
