@@ -37,6 +37,35 @@ public class Ajax
 		} );
 	}
 
+	public static <T> Promise<T, Object> sendRequestAndConvertDto( String method, String url, Class<T> convertedClass )
+	{
+		return new Promise<>( new Executor<T, Object>()
+		{
+			@Override
+			public void execute( Resolver<T> resolver, Rejector<Object> rejecter )
+			{
+				Ajax.sendRequest( method, url ).then( new Resolution<String>()
+				{
+					@Override
+					public void resolved( String value )
+					{
+						Object dto = JSON.parse( value );
+						T convertedDto = AngularTools.convertDto( dto, convertedClass );
+
+						resolver.resolve( convertedDto );
+					}
+				}, new Rejection<Object>()
+				{
+					@Override
+					public void rejected( Object error )
+					{
+						rejecter.reject( "error getting heroes because of: " + error );
+					}
+				} );
+			}
+		} );
+	}
+
 	public static <T> Promise<JsArray<T>, Object> sendRequestAndConvertDtoList( String method, String url, Class<T> convertedClass )
 	{
 		return new Promise<>( new Executor<JsArray<T>, Object>()
@@ -44,7 +73,7 @@ public class Ajax
 			@Override
 			public void execute( Resolver<JsArray<T>> resolver, Rejector<Object> rejecter )
 			{
-				Ajax.sendRequest( "GET", "heroes" ).then( new Resolution<String>()
+				Ajax.sendRequest( method, url ).then( new Resolution<String>()
 				{
 					@Override
 					public void resolved( String value )

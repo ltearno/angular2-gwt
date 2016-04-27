@@ -2,10 +2,7 @@ package fr.lteconsulting.angular2gwt.client;
 
 import com.google.gwt.core.shared.GWT;
 
-import fr.lteconsulting.angular2gwt.client.interop.promise.Executor;
 import fr.lteconsulting.angular2gwt.client.interop.promise.Promise;
-import fr.lteconsulting.angular2gwt.client.interop.promise.Rejector;
-import fr.lteconsulting.angular2gwt.client.interop.promise.Resolver;
 import jsinterop.annotations.JsType;
 
 /**
@@ -25,16 +22,11 @@ public class HeroService
 
 	public HeroService()
 	{
-		heroes = new Promise<>( new Executor<JsArray<Hero>, String>()
-		{
-			@Override
-			public void execute( Resolver<JsArray<Hero>> resolver, Rejector<String> rejecter )
-			{
-				Ajax.sendRequestAndConvertDtoList( "GET", "heroes", Hero.class ).then( list -> {
-					_heroes = list;
-					resolver.resolve( list );
-				}, error -> GWT.log( "error getting heroes " + error ) );
-			}
+		heroes = new Promise<>( ( resolver, rejecter ) -> {
+			Ajax.sendRequestAndConvertDtoList( "GET", "heroes", Hero.class ).then( list -> {
+				_heroes = list;
+				resolver.resolve( list );
+			}, error -> GWT.log( "error getting heroes " + error ) );
 		} );
 	}
 
@@ -43,16 +35,28 @@ public class HeroService
 		return heroes;
 	}
 
-	public void addHero( Hero hero )
+	public Promise<Hero, String> addHero()
 	{
-		heroes.then( list -> list.push( hero ), null );
+		return new Promise<>( ( resolver, rejecter ) -> {
+			Ajax.sendRequestAndConvertDto( "GET", "addHero", Hero.class ).then( hero -> {
+				_heroes.push( hero );
+				resolver.resolve( hero );
+			}, error -> rejecter.reject( "error while adding an hero : " + error ) );
+		} );
 	}
 
-	public void deleteHero( Hero hero )
+	public Promise<Void, String> deleteHero( Hero hero )
 	{
-		int index = _heroes.indexOf( hero );
-		if( index > -1 )
-			_heroes.splice( index, 1 );
+		return new Promise<>( ( resolver, rejecter ) -> {
+			Ajax.sendRequest( "GET", "deleteHero?id=" + hero.getId() ).then( result -> {
+				int index = _heroes.indexOf( hero );
+				if( index > -1 )
+					_heroes.splice( index, 1 );
+
+				resolver.resolve( null );
+			}, error -> rejecter.reject( "error while deleting hero " + hero.getId() + ": " + error ) );
+		} );
+
 	}
 
 	public Hero getHero( int id )

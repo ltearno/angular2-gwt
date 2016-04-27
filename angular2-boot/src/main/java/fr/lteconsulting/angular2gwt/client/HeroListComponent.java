@@ -1,6 +1,9 @@
 package fr.lteconsulting.angular2gwt.client;
 
+import com.google.gwt.core.client.GWT;
+
 import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.client.interop.Event;
 import fr.lteconsulting.angular2gwt.client.interop.angular.Router;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
@@ -28,8 +31,6 @@ import jsinterop.annotations.JsType;
 @JsType
 public class HeroListComponent
 {
-	private static int nextId = 100;
-	
 	private HeroService heroService;
 	private Router router;
 
@@ -56,6 +57,7 @@ public class HeroListComponent
 	@JsMethod
 	protected void onSelect( Hero hero )
 	{
+		GWT.log( "selected " + hero );
 		selectedHero = hero;
 	}
 
@@ -67,8 +69,10 @@ public class HeroListComponent
 	}
 
 	@JsMethod
-	protected void delete( Hero hero )
+	protected void delete( Hero hero, Event event )
 	{
+		event.preventDefault();
+
 		heroService.deleteHero( hero );
 
 		if( selectedHero == hero )
@@ -78,11 +82,6 @@ public class HeroListComponent
 	@JsMethod
 	private void newHero()
 	{
-		heroService.getHeroes().then( list -> {
-			Hero model = new Hero( nextId++, "<no name>", "", null );
-			heroService.addHero( model );
-
-			gotoDetail( model );
-		}, null );
+		heroService.addHero();// .then( hero -> gotoDetail( hero ), null );
 	}
 }

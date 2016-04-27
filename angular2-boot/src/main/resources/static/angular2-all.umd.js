@@ -37580,7 +37580,6 @@ var lteconsultingConvertObject = (function (prototypes){
 			}
 			
 			var result = Object.create(prototype.prototype);
-			console.log(typeof result + "  == ? == " + prototypeName);
 			if(source)
 			{
 				for (var prop in source)
