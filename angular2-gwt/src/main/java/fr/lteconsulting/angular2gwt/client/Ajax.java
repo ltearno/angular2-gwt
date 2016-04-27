@@ -1,9 +1,10 @@
-package fr.lteconsulting.angular2gwt.client.tools;
+package fr.lteconsulting.angular2gwt.client;
 
-import fr.lteconsulting.angular2gwt.client.tools.promise.Executor;
-import fr.lteconsulting.angular2gwt.client.tools.promise.Promise;
-import fr.lteconsulting.angular2gwt.client.tools.promise.Rejector;
-import fr.lteconsulting.angular2gwt.client.tools.promise.Resolver;
+import fr.lteconsulting.angular2gwt.client.interop.promise.Executor;
+import fr.lteconsulting.angular2gwt.client.interop.promise.Promise;
+import fr.lteconsulting.angular2gwt.client.interop.promise.Rejector;
+import fr.lteconsulting.angular2gwt.client.interop.promise.Resolver;
+import fr.lteconsulting.angular2gwt.client.interop.xmlhttprequest.XMLHttpRequest;
 
 public class Ajax
 {

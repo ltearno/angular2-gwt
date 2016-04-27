@@ -15,7 +15,8 @@ import fr.lteconsulting.angular2gwt.client.Hero;
 @EnableAutoConfiguration
 public class HeroesController
 {
-	private static List<Hero> heroes = Arrays.asList( new Hero( "Injector", "Do nothing", null ), new Hero( "Windstorm", "Do nothing", null ), new Hero( "Bombasto", "Do nothing", null ), new Hero( "Magneta", "Do nothing", null ), new Hero( "Tornado", "Do nothing", null ) );
+	private static List<Hero> heroes = Arrays.asList( new Hero( 1, "Injector", "Do nothing", null ), new Hero( 2, "Windstorm", "Do nothing", null ), new Hero( 3, "Bombasto", "Do nothing", null ), new Hero( 4, "Magneta", "Do nothing", null ),
+			new Hero( 5, "Tornado", "Do nothing", null ) );
 
 	@RequestMapping( "/heroes" )
 	@ResponseBody

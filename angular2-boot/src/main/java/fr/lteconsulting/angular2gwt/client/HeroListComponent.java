@@ -1,6 +1,7 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.client.interop.angular.Router;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
@@ -43,8 +44,9 @@ public class HeroListComponent
 	public HeroListComponent( HeroService heroService, Router router )
 	{
 		this.heroService = heroService;
-		this.heroes = heroService.getHeroes();
 		this.router = router;
+
+		heroService.getHeroes().then( list -> heroes = list, null );
 
 		title = "Heroes list";
 	}
@@ -64,9 +66,11 @@ public class HeroListComponent
 	@JsMethod
 	private void newHero()
 	{
-		Hero model = new Hero( "<no name>", "", null );
-		heroService.addHero( model );
+		heroService.getHeroes().then( list -> {
+			Hero model = new Hero( list.length() + 1, "<no name>", "", null );
+			heroService.addHero( model );
 
-		gotoDetail( model );
+			gotoDetail( model );
+		}, null );
 	}
 }

@@ -35,11 +35,11 @@ public class Hero
 	}
 
 	@JsIgnore
-	public Hero( String name, String power, String alterEgo )
+	public Hero( int id, String name, String power, String alterEgo )
 	{
 		this();
 
-		this.id = Counter.nextId++;
+		this.id = id;
 		this.name = name;
 		this.power = power;
 		this.alterEgo = alterEgo;
@@ -64,12 +64,4 @@ public class Hero
 	{
 		return alterEgo;
 	}
-}
-
-/**
- * This is a little hack to have a static modifiable counter available for the Hero class.
- */
-class Counter
-{
-	static int nextId = 1;
 }

@@ -2,6 +2,7 @@ package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
+import fr.lteconsulting.angular2gwt.client.interop.angular.RouteParams;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;

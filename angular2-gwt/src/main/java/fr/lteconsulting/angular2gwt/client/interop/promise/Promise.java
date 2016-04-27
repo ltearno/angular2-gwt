@@ -1,4 +1,4 @@
-package fr.lteconsulting.angular2gwt.client.tools.promise;
+package fr.lteconsulting.angular2gwt.client.interop.promise;
 
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;

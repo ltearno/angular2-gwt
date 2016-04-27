@@ -30,10 +30,10 @@ import fr.lteconsulting.angular2gwt.Component;
 import fr.lteconsulting.angular2gwt.Input;
 import fr.lteconsulting.angular2gwt.Output;
 import fr.lteconsulting.angular2gwt.RouteConfigs;
-import fr.lteconsulting.angular2gwt.client.RouteParams;
-import fr.lteconsulting.angular2gwt.client.Router;
-import fr.lteconsulting.angular2gwt.client.RouterDirectives;
-import fr.lteconsulting.angular2gwt.client.RouterProviders;
+import fr.lteconsulting.angular2gwt.client.interop.angular.RouteParams;
+import fr.lteconsulting.angular2gwt.client.interop.angular.Router;
+import fr.lteconsulting.angular2gwt.client.interop.angular.RouterDirectives;
+import fr.lteconsulting.angular2gwt.client.interop.angular.RouterProviders;
 
 @SupportedAnnotationTypes(AngularComponentProcessor.AnnotationFqn)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -269,11 +269,8 @@ public class AngularComponentProcessor extends AbstractProcessor {
 
 		@Override
 		public String toString() {
-			// "@" + name + HELPER_CLASS_SUFFIX + "::get()()"
 			return "{ path: '" + path + "', name: '" + name + "', component: @" + component + HELPER_CLASS_SUFFIX
 					+ "::get()(), " + (useAsDefault ? "useAsDefault: true" : "") + "}";
-			// return "{ path: '" + path + "', name: '" + name + "', component:
-			// $wnd." + component + "}";
 		}
 	}
 

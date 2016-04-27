@@ -1,4 +1,4 @@
-package fr.lteconsulting.angular2gwt.client;
+package fr.lteconsulting.angular2gwt.client.interop.angular;
 
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;

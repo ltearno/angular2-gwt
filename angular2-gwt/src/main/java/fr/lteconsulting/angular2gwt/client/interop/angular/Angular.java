@@ -1,5 +1,6 @@
-package fr.lteconsulting.angular2gwt.client;
+package fr.lteconsulting.angular2gwt.client.interop.angular;
 
+import fr.lteconsulting.angular2gwt.client.JsArray;
 import jsinterop.annotations.JsMethod;
 
 public class Angular {

@@ -1,6 +1,7 @@
 package fr.lteconsulting.angular2gwt.client;
 
 import fr.lteconsulting.angular2gwt.Component;
+import fr.lteconsulting.angular2gwt.client.interop.angular.Router;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
@@ -31,7 +32,7 @@ public class DashboardComponent
 	@JsMethod
 	void ngOnInit()
 	{
-		heroes = heroService.getHeroes().slice( 1, 5 );
+		heroService.getHeroes().then( list -> heroes = list.slice( 1, 5 ), null );
 	}
 
 	@JsMethod

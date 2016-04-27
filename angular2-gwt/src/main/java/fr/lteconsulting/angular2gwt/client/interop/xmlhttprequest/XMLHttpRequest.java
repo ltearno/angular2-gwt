@@ -1,4 +1,4 @@
-package fr.lteconsulting.angular2gwt.client.tools;
+package fr.lteconsulting.angular2gwt.client.interop.xmlhttprequest;
 
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
