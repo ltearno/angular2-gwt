@@ -28,12 +28,6 @@
             <version>${jsinterop.version}</version>
             <classifier>sources</classifier>
         </dependency>
-		<dependency>
-			<groupId>fr.lteconsulting</groupId>
-			<artifactId>angular2-gwt-processor</artifactId>
-			<version>1.0-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
