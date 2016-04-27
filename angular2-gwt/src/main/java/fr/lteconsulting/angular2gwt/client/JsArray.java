@@ -18,53 +18,69 @@ import jsinterop.annotations.JsType;
  * <p>
  * <i>TODO</i>implement {@link List}
  */
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Array")
-public class JsArray<T> {
+@JsType( isNative = true, namespace = JsPackage.GLOBAL, name = "Array" )
+public class JsArray<T>
+{
 	@JsOverlay
 	@SafeVarargs
-	public final static <T> JsArray<T> of(T... array) {
+	public final static <T> JsArray<T> of( T... array )
+	{
 		JsArray<T> result = new JsArray<>();
-		for (T item : array)
-			result.push(item);
+		for( T item : array )
+			result.push( item );
 		return result;
 	}
 
 	@JsMethod
-	public native void push(T item);
+	public native void push( T item );
 
-	@JsProperty(name = "length")
+	@JsProperty( name = "length" )
 	public native int length();
 
 	@JsMethod
-	public native JsArray<T> slice(int start, int end);
+	public native JsArray<T> slice( int start, int end );
+
+	@JsMethod
+	public native int indexOf( T item );
+
+	@JsMethod
+	public native void splice( int start, int length );
 
 	@JsOverlay
-	public final T get(int index) {
-		return JsTools.get(this, index);
+	public final T get( int index )
+	{
+		return JsTools.get( this, index );
 	}
 
 	@JsOverlay
-	public final Iterable<T> iterate() {
-		return new Iterable<T>() {
+	public final Iterable<T> iterate()
+	{
+		return new Iterable<T>()
+		{
 			@Override
-			public Iterator<T> iterator() {
-				return new Iterator<T>() {
+			public Iterator<T> iterator()
+			{
+				return new Iterator<T>()
+				{
 					int index = 0;
 
 					@Override
-					public boolean hasNext() {
+					public boolean hasNext()
+					{
 						return index < length();
 					}
 
 					@Override
-					public T next() {
-						T result = get(index);
+					public T next()
+					{
+						T result = get( index );
 						index++;
 						return result;
 					}
 
 					@Override
-					public void remove() {
+					public void remove()
+					{
 						throw new RuntimeException();
 					}
 				};

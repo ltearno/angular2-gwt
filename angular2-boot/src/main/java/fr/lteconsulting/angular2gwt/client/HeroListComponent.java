@@ -28,6 +28,8 @@ import jsinterop.annotations.JsType;
 @JsType
 public class HeroListComponent
 {
+	private static int nextId = 100;
+	
 	private HeroService heroService;
 	private Router router;
 
@@ -60,14 +62,24 @@ public class HeroListComponent
 	@JsMethod
 	protected void gotoDetail( Hero hero )
 	{
+		// TODO this is to be improved : how to make an Angular application link easily
 		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
+	}
+
+	@JsMethod
+	protected void delete( Hero hero )
+	{
+		heroService.deleteHero( hero );
+
+		if( selectedHero == hero )
+			selectedHero = null;
 	}
 
 	@JsMethod
 	private void newHero()
 	{
 		heroService.getHeroes().then( list -> {
-			Hero model = new Hero( list.length() + 1, "<no name>", "", null );
+			Hero model = new Hero( nextId++, "<no name>", "", null );
 			heroService.addHero( model );
 
 			gotoDetail( model );
