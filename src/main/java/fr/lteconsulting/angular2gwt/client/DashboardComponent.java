@@ -38,7 +38,7 @@ public class DashboardComponent
 	@JsMethod
 	private void gotoDetail( Hero hero )
 	{
-		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
+		router.navigate( JsArray.of( "Hero", new LinkDto( hero.getId() ) ) );
 	}
 }
 

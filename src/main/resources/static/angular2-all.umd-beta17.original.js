@@ -4504,7 +4504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.mergeResolvedReflectiveProviders = mergeResolvedReflectiveProviders;
 	function _normalizeProviders(providers, res) {
 	    providers.forEach(function (b) {
-	        if ((typeof b) === (typeof lang_1.Type)) {
+	        if (b instanceof lang_1.Type) {
 	            res.push(provider_1.provide(b, { useClass: b }));
 	        }
 	        else if (b instanceof provider_1.Provider) {
@@ -4557,7 +4557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var upperBoundVisibility = null;
 	    for (var i = 0; i < metadata.length; ++i) {
 	        var paramMetadata = metadata[i];
-	        if ((typeof paramMetadata) === (typeof lang_1.Type)) {
+	        if (paramMetadata instanceof lang_1.Type) {
 	            token = paramMetadata;
 	        }
 	        else if (paramMetadata instanceof metadata_1.InjectMetadata) {
@@ -29257,7 +29257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 	function isValidType(value) {
-	    return lang_1.isPresent(value) && ((typeof value) === (typeof lang_1.Type));
+	    return lang_1.isPresent(value) && (value instanceof lang_1.Type);
 	}
 	function calcModuleUrl(reflector, type, cmpMetadata) {
 	    var moduleId = cmpMetadata.moduleId;
@@ -29618,7 +29618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var lang_1 = __webpack_require__(5);
 	var lifecycle_hooks_1 = __webpack_require__(157);
 	function hasLifecycleHook(lcInterface, token) {
-	    if ((typeof token) !== (typeof lang_1.Type))
+	    if (!(token instanceof lang_1.Type))
 	        return false;
 	    var proto = token.prototype;
 	    switch (lcInterface) {
@@ -39375,7 +39375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var lifecycle_annotations_impl_1 = __webpack_require__(272);
 	var reflection_1 = __webpack_require__(18);
 	function hasLifecycleHook(e, type) {
-	    if ((typeof type) !== (typeof lang_1.Type))
+	    if (!(type instanceof lang_1.Type))
 	        return false;
 	    return e.name in type.prototype;
 	}
@@ -41393,29 +41393,3 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-
-var lteconsultingConvertObject = (function (prototypes){
-	return function(prototypeName, source){
-		function internal(prototypeName, source){
-			var prototype = prototypes[prototypeName];
-			if( ! prototype ) {
-				prototype = window;
-				var parts = prototypeName.split(".");
-				for(var i in parts)
-					prototype = prototype[parts[i]];
-				
-				prototypes[prototypeName] = prototype;
-			}
-			
-			var result = Object.create(prototype.prototype);
-			if(source)
-			{
-				for (var prop in source)
-					result[prop] = source[prop];
-			}
-			return result;
-		}
-		
-		return internal(prototypeName, source);
-	}
-})({});

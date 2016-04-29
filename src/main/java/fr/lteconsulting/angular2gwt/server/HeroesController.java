@@ -45,7 +45,7 @@ public class HeroesController
 	}
 
 	@RequestMapping( "/deleteHero" )
-	void deleteHero( @RequestParam int id )
+	void deleteHero( @RequestParam( name = "id" ) int id )
 	{
 		heroes.stream().filter( h -> h.getId() == id ).findFirst().ifPresent( heroes::remove );
 	}

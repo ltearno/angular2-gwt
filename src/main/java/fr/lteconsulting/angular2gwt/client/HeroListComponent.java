@@ -65,7 +65,7 @@ public class HeroListComponent
 	protected void gotoDetail( Hero hero )
 	{
 		// TODO this is to be improved : how to make an Angular application link easily
-		router.navigate( JsArray.of( "HeroDetail", new LinkDto( hero.getId() ) ) );
+		router.navigate( JsArray.of( "Hero", new LinkDto( hero.getId() ) ) );
 	}
 
 	@JsMethod

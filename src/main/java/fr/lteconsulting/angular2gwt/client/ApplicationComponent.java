@@ -37,7 +37,7 @@ import jsinterop.annotations.JsType;
 	component= DashboardComponent.class )
 @RouteConfig(
 	path="/detail/:id",
-	name= "HeroDetail",
+	name= "Hero",
 	component= HeroFormComponent.class)
 //@formatter:on
 @JsType

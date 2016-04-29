@@ -2,7 +2,7 @@
 	<div>
 		<h1>{{title}}</h1>
 		<ul class="heroes">
-			<li *ngFor="#hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)"><span class="badge">{{hero.id}}</span> {{hero.name}} <a href='#' (click)="delete(hero, $event)">[delete]</a></li>
+			<li *ngFor="let hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)"><span class="badge">{{hero.id}}</span> {{hero.name}} <a href='#' (click)="delete(hero, $event)">[delete]</a></li>
 		</ul>
 		<button type="button" class="btn btn-default" (click)="newHero()">New Hero</button>
 	</div>

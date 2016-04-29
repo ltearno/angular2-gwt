@@ -18,6 +18,37 @@ A demo is available [here](http://lteconsulting.fr/angular2-gwt/).
 
 ## Instructions
 
+
+### From the official archetype
+
+Use the archetype which builds a fully working Angular2 + SpringBoot application :
+
+		mvn archetype:generate -DarchetypeGroupId=fr.lteconsulting -DarchetypeArtifactId=angular2-gwt.archetype -DarchetypeVersion=1.0
+
+Enter the desired *groupId*, *artifactId*, *version* and *package* and your application will be created in a sub directory named after the choosen *artifactId*.
+
+Enter into this directory and build your application :
+
+		mvn clean install
+
+Everything should work fine. Now you can run the built application with this :
+
+		java -jar target/artifactId.jar
+
+This will launch the SpringBoot application with a minimal client side Angular 2 controller. When entering [http://localhost:8080](http://localhost:8080) in your browser, a page should load and write "Your application is working !". It is the sign that everything is bootstraped correctly and that you can begin to work.
+
+During development, building the entire application is too long. So you can stop the java process we just launched and launch the SpringBoot development mode instead :
+
+		mvn spring-boot:run
+
+This will allow to have hot swapping of classes on the server side (to a certain extent, see [documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-hotswapping.html)). If you also want to have hot reload of client classes, you need to start the GWT Super Dev Mode. But that has to be done in another terminal because we don't want to stop the server !
+
+		mvn gwt:run-codeserver
+
+You can open the application project in your IDE (see configuration problems that can happen), work on the code and refresh in the browser to get live updates.
+
+## BBB
+
 Checkout this repository, then :
 
 		# go to the web app resource directory
@@ -49,35 +80,35 @@ Here, the `MyComponent` class, written by us, is used as an Angular component. T
 
 And the component is implemented in the `MyComponent` class, which reads :
 
-		@AngularComponent(
-				selector = "my-app",
-				template = "<div>"
-						+ "Name of hero to add : {{name}}<br/>"
-						+ "<input [(ngModel)]='name'><br/>"
-						+ "<button (click)='onClick($event)'>Add</button>"
-						+ "<ul><li *ngFor='#hero of heroes'>{{ hero }}</li></ul>"
-						+ "</div>" )
-		@JsType
-		public class MyComponent
-		{
-			@JsProperty
-			private String name;
-		
-			@JsProperty
-			private JsArray<String> heroes;
-		
-			public MyComponent()
-			{
-				name = "Arnaud";
-				heroes = JsArray.of( new String[] { "Windstorm", "Bombasto", "Magneta", "Tornado" } );
-			}
-		
-			@JsMethod
-			private void onClick()
-			{
-				heroes.push( name );
-			}
-		}
+@AngularComponent(
+		selector = "my-app",
+		template = "<div>"
+				+ "Name of hero to add : {{name}}<br/>"
+				+ "<input [(ngModel)]='name'><br/>"
+				+ "<button (click)='onClick($event)'>Add</button>"
+				+ "<ul><li *ngFor='#hero of heroes'>{{ hero }}</li></ul>"
+				+ "</div>" )
+@JsType
+public class MyComponent
+{
+	@JsProperty
+	private String name;
+
+	@JsProperty
+	private JsArray<String> heroes;
+
+	public MyComponent()
+	{
+		name = "Arnaud";
+		heroes = JsArray.of( new String[] { "Windstorm", "Bombasto", "Magneta", "Tornado" } );
+	}
+
+	@JsMethod
+	private void onClick()
+	{
+		heroes.push( name );
+	}
+}
 
 This is quiet straight-forward, and the class in the code contains comments so that you can understand everything that is going on...
 

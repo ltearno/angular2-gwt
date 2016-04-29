@@ -12,7 +12,7 @@
 		<div class="form-group">
 			<label for="power">Hero Power</label> <select class="form-control" required
           [(ngModel)]="model.power" ngControl="power" #power="ngForm">
-				<option *ngFor="#p of powers" [value]="p">{{p}}</option>
+				<option *ngFor="let p of powers" [value]="p">{{p}}</option>
 			</select>
 			<div [hidden]="power.valid || power.pristine" class="alert alert-danger">Power is required</div>
 		</div>
