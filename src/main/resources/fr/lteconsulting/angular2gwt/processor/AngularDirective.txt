@@ -1,0 +1,24 @@
+package PACKAGE;
+
+public class CLASS_NAME
+{
+	public static native Object get()
+	/*-{
+		var directive = $wnd.DIRECTIVE_CLASS_FQN;
+		
+		directive.parameters = directive.parameters || [
+			PARAMETERS
+		];
+
+		directive.annotations = directive.annotations || [ new $wnd.ng.core.Directive({
+			selector: "SELECTOR",
+			HOST
+			INPUTS
+		})
+		];
+		
+		PROPERTIES
+
+		return directive;
+	}-*/;
+}

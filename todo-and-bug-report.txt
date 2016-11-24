@@ -1,0 +1,88 @@
+Améliorer les paramètres de route
+Mettre a jour l'archetype
+Pousser une version SNAPSHOT
+Utiliser un composant écrite en JS
+Structurer l'ui de Tour-Of-Heroes
+Compression GZ
+Utiliser un composant écrite en TS
+Importer un widget GWT (bof, il faut mettre GWT en dépendance)
+Utiliser dans JVM Nashorn
+TO CONTINUE - Utiliser AngularMaterial
+DONE - Emmettre une erreur quand le développeur oublie de mettre @JsType
+DONE - Améliorer les noms des classes angular2gwt
+DONE - Formatter le code
+DONE - Donner la possibilité de faire une properiété en lecture seule
+DONE - Réorganiser les packages
+DONE - Intercept input property changes with ngOnChanges
+
+REMONTER LES BUGS GWT JSINTEROP SUIVANT :
+
+JsInterop does not generate the type if the constructor is not public or @JsConstructor, but says nothing about
+
+Remonter le bug :
+@Component(selector = "hero-search", templateUrl = "hero-search.component.html", styleUrls = "hero-search.component.css", providers = HeroSearchService.class)
+@JsType
+public class HeroSearchComponent implements OnInit {
+
+	@Override
+	public void ngOnInit() {
+		heroes = searchTerms.debounceTime(300) // wait for 300ms pause in events
+				.distinctUntilChanged() // ignore if next search term is same as
+										// previous
+				.switchMap((term, index) -> {
+					GWT.log("search term: " + term + " index:" + index);
+					return (term != null && !term.isEmpty()) ? heroSearchService.search(term)
+							: Observable.of(JsArray.<Hero>empty());
+				}).onError(error -> {
+					// TODO: real error handling
+					GWT.log("Error:" + error);
+					return Observable.of(JsArray.empty());
+				});
+	}
+}
+
+
+Autre erreur :
+@Component(selector = "my-astronaut", template = "<p>" + "{{astronaut}}: <strong>{{mission}}</strong>" + "<button "
+		+ "(click)='confirm()'" + " [disabled]='!announced || confirmed'>" + "Confirm" + "</button>" + "</p>")
+@JsType
+public class AstronautComponent implements OnDestroy {
+	@Input
+	@JsProperty
+	private String astronaut;
+
+	@JsProperty
+	private String mission = "<no mission announced>";
+	
+	@JsProperty
+	private boolean confirmed = false;
+	
+	@JsProperty
+	private boolean announced = false;
+
+	private Subscription subscription;
+
+	private MissionService missionService;
+
+	private AstronautComponent(MissionService missionService) {
+		this.missionService = missionService;
+
+		subscription = missionService.missionAnnounced$.subscribe(mission -> {
+			this.mission = mission;
+			announced = true;
+			confirmed = false;
+		});
+	}
+
+	@JsMethod
+	private void confirm() {
+		confirmed = true;
+		missionService.confirmMission(astronaut);
+	}
+
+	@Override
+	public void ngOnDestroy() {
+		// prevent memory leak when component destroyed
+		//subscription.unsubscribe();
+	}
+}

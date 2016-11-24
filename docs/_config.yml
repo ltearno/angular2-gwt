@@ -1,0 +1,24 @@
+# Site settings
+title: Angular2Boot
+email: ltearno@gmail.com
+description: >
+  Associate Angular 2 with Spring Boot
+  to get a fully typed and responsive experience.
+  Get your productivity back !
+  crafted by [LTE Consulting](http://lteconsulting.fr)
+baseurl: "/angular2boot"
+url: "http://lteconsulting.fr"
+fixedNav: 'true' # true or false
+# theme: purple # green, blue, orange, purple, grey
+twitterUsername: ltearno
+githubUsername: ltearno/hexa.tools
+dribbbleUsername:
+codepenUsername:
+
+# Build settings
+permalink: /:year/:month/:title
+markdown: kramdown
+include: [_pages]
+exclude: [_site, CHANGELOG.md, LICENSE, README.md]
+sass:
+  style: compressed

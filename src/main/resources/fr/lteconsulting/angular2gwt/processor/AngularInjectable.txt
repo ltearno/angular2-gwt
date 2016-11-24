@@ -1,0 +1,18 @@
+package PACKAGE;
+
+public class CLASS_NAME
+{
+	public static native Object get()
+	/*-{
+		var injectable = $wnd.INJECTABLE_CLASS_FQN;
+		
+		injectable.parameters = injectable.parameters || [
+			PARAMETERS
+		];
+
+		injectable.annotations = injectable.annotations || [ new $wnd.ng.core.Injectable()
+		];
+
+		return injectable;
+	}-*/;
+}
