@@ -267,7 +267,7 @@ You need to install `m2e-apt` component. Otherwise, everything should work out o
 
 Angular version     | `angular2-gwt.archetype` versions | `angular2-gwt` versions
 --------------------|-----------------------------------|--------------------------
-`2.0.0`             | `1.6`, `1.7-SNAPSHOT`             | `1.6`, `1.7-SNAPSHOT`
+`2.0.0`             | `1.8`, `1.9-SNAPSHOT`             | `1.8`, `1.9-SNAPSHOT`
 `2.0.0 rc 6`        | `1.4`, `1.5-SNAPSHOT`             | `1.3`, `1.4-SNAPSHOT`
 `2.0.0 rc 5`        | `1.3`, `1.4-SNAPSHOT`             | `1.2`, `1.3-SNAPSHOT`
 `2.0.0 beta 17`     | `1.1`, `1.2-SNAPSHOT`             | `1.0`, `1.1-SNAPSHOT`

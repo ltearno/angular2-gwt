@@ -29,13 +29,13 @@ If you have not created a project yet, do it with the following command :
 mvn archetype:generate \
   -DarchetypeGroupId=fr.lteconsulting \
   -DarchetypeArtifactId=angular2-gwt.archetype \
-  -DarchetypeVersion=1.6
+  -DarchetypeVersion=1.8
 {% endhighlight %}
 
 _Here is also the same command in only one line, for you to copy-paste easily:_
 
 {% highlight bash %}
-mvn archetype:generate -DarchetypeGroupId=fr.lteconsulting -DarchetypeArtifactId=angular2-gwt.archetype -DarchetypeVersion=1.6
+mvn archetype:generate -DarchetypeGroupId=fr.lteconsulting -DarchetypeArtifactId=angular2-gwt.archetype -DarchetypeVersion=1.8
 {% endhighlight %}
 
 Go into the project folder and build it to check that everything is ok :
