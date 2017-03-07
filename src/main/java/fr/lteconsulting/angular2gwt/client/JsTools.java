@@ -11,10 +11,10 @@ public class JsTools
 	public static native boolean propertyInObject( String property, Object object );
 
 	@JsMethod( namespace = "lteconsulting", name = "getObjectProperty" )
-	public static native Object getObjectProperty( Object object, String property );
+	public static native Object getObjectProperty( Object object, Object property );
 
 	@JsMethod( namespace = "lteconsulting", name = "setObjectProperty" )
-	public static native void setObjectProperty( Object object, String property, Object value );
+	public static native void setObjectProperty( Object object, Object property, Object value );
 
 	@JsMethod( namespace = "lteconsulting", name = "getArrayItem" )
 	public static native <T> T getArrayItem( Object array, int index );
