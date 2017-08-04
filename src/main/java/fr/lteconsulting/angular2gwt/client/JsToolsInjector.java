@@ -41,7 +41,10 @@ public class JsToolsInjector
 		content += "    },\n";
 
 		content += "    getObjectProperty: function( object, property ) {\n";
-		content += "        return object[property] || null;\n";
+		content += "        if( typeof object[property] === 'undefined' || object[property] === null ){\n";
+		content += "            return null;\n";
+		content += "        }\n";
+		content += "        return object[property];\n";
 		content += "    },\n";
 
 		content += "    setObjectProperty: function( object, property, value ) {\n";
