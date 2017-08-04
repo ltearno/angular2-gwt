@@ -1,5 +1,6 @@
 package fr.lteconsulting.angular2gwt.client.interop.ng.core;
 
+import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -10,4 +11,8 @@ public class ComponentRef
 
 	@JsProperty( name = "instance" )
 	public native Object instance();
+	
+	@JsMethod
+	public native void destroy();
+	
 }
